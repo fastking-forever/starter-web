@@ -170,6 +170,8 @@ function Countdown() {
   const [remaining, setRemaining] = useState(300);
   const [running, setRunning] = useState(false);
   const deadlineRef = useRef<number | null>(null);
+  const secondsRef = useRef(300);
+  const remainingRef = useRef(300);
 
   // Count against a real deadline instead of interval ticks, so the timer
   // stays accurate even when the browser throttles a background tab.
@@ -179,6 +181,7 @@ function Countdown() {
       const deadline = deadlineRef.current;
       if (deadline === null) return;
       const left = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+      remainingRef.current = left;
       setRemaining(left);
       if (left === 0) {
         setRunning(false);
@@ -191,10 +194,13 @@ function Countdown() {
 
   function changeMinutes(n: number) {
     const next = Math.min(60, Math.max(1, n));
+    const seconds = next * 60;
     deadlineRef.current = null;
+    secondsRef.current = seconds;
+    remainingRef.current = seconds;
     setRunning(false);
     setMinutes(next);
-    setRemaining(next * 60);
+    setRemaining(seconds);
   }
 
   function toggle() {
@@ -202,16 +208,18 @@ function Countdown() {
       setRunning(false);
       return;
     }
-    const seconds = remaining === 0 ? minutes * 60 : remaining;
-    if (remaining === 0) setRemaining(seconds);
+    const seconds = remainingRef.current === 0 ? secondsRef.current : remainingRef.current;
+    remainingRef.current = seconds;
     deadlineRef.current = Date.now() + seconds * 1000;
+    setRemaining(seconds);
     setRunning(true);
   }
 
   function resetTimer() {
     deadlineRef.current = null;
     setRunning(false);
-    setRemaining(minutes * 60);
+    remainingRef.current = secondsRef.current;
+    setRemaining(secondsRef.current);
   }
 
   const finished = remaining === 0;
