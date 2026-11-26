@@ -32,7 +32,7 @@ export default function GameWheel() {
       ctx.moveTo(c, c);
       ctx.arc(c, c, r, start, end);
       ctx.closePath();
-      ctx.fillStyle = i % 2 === 0 ? "#F2F4F0" : "#070A08";
+      ctx.fillStyle = i % 2 === 0 ? "#F2F7F3" : "#06100C";
       ctx.fill();
       ctx.strokeStyle = "rgba(255,255,255,0.3)";
       ctx.stroke();
@@ -42,7 +42,7 @@ export default function GameWheel() {
       ctx.rotate(start + (step / 2) * (Math.PI / 180));
       ctx.textAlign = "right";
       ctx.textBaseline = "middle";
-      ctx.fillStyle = i % 2 === 0 ? "#070A08" : "#F2F4F0";
+      ctx.fillStyle = i % 2 === 0 ? "#06100C" : "#F2F7F3";
       ctx.font = "bold 11px Arial";
       ctx.fillText(option.name, r - 12, 0);
       ctx.restore();

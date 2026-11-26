@@ -78,7 +78,7 @@ export default function DinoGame() {
       const dt = Math.min((now - last) / 16.67, 2);
       last = now;
 
-      ctx.fillStyle = "#070A08";
+      ctx.fillStyle = "#06100C";
       ctx.fillRect(0, 0, W, H);
       ctx.fillStyle = "#fafafa";
 
@@ -151,7 +151,7 @@ export default function DinoGame() {
         ctx.fillRect(DINO_X + 3, GROUND - 8, 7, 4);
         ctx.fillRect(DINO_X + 14, GROUND - 8, 7, 4);
       }
-      ctx.fillStyle = "#070A08";
+      ctx.fillStyle = "#06100C";
       ctx.fillRect(DINO_X + 25, top + 4, 3, 3);
 
       // Score

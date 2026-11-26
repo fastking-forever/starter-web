@@ -38,7 +38,7 @@ export default function Home() {
   return (
     <main className="overflow-hidden">
       {/* Fixed navbar */}
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#070A08]/75 backdrop-blur-xl">
+      <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#06100C]/75 backdrop-blur-xl">
         <div className="relative mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-5 md:px-8">
           <a href="#games" className="btn-primary !px-4 !py-2 text-[11px] md:!px-5">
             نزّل دلوقتي ↓
@@ -67,7 +67,7 @@ export default function Home() {
       </header>
 
       {/* Mobile navigation */}
-      <nav className="sticky top-16 z-40 flex gap-1 overflow-x-auto border-b border-white/10 bg-[#070A08]/90 px-4 py-2 backdrop-blur-xl lg:hidden">
+      <nav className="sticky top-16 z-40 flex gap-1 overflow-x-auto border-b border-white/10 bg-[#06100C]/90 px-4 py-2 backdrop-blur-xl lg:hidden">
         {navLinks.map((link) => (
           <a
             key={link.href}
