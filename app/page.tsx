@@ -1,12 +1,14 @@
 import AiChat from "@/components/ai-chat";
+import DinoGame from "@/components/dino-game";
 import Faq from "@/components/faq";
 import GameLibrary from "@/components/game-library";
 import SpaceShooter from "@/components/space-shooter";
+import Tools from "@/components/tools";
 
 const features = [
   { n: "01", title: "تحميل مباشر", body: "اضغط و	nزّل. مفيش تسجيل، مفيش انتظار، مفيش تعقيد.", icon: "↓" },
-  { n: "02", title: "العب من الموقع", body: "لعبة فضاء شغالة جوه الصفحة بضرب نار ونقاط وأرواح.", icon: "✦" },
-  { n: "03", title: "مساعد ذكي", body: "اسأل عن أي لعبة أو طريقة تحميل والباقي علينا.", icon: "◈" },
+  { n: "02", title: "العب من الموقع", body: "لعبتين شغالتين جوه الصفحة: ADAM Strike وADAM Dino.", icon: "✦" },
+  { n: "03", title: "خدمات ومساعد", body: "حاسبة ومولّد كلمات مرور ومؤقت، ومساعد ذكي يرد بالعربي.", icon: "◈" },
 ];
 
 export default function Home() {
@@ -22,6 +24,8 @@ export default function Home() {
           <nav className="hidden items-center gap-7 text-sm text-neutral-400 md:flex">
             <a href="#games" className="transition hover:text-white">الألعاب</a>
             <a href="#play" className="transition hover:text-white">العب دلوقتي</a>
+            <a href="#dino" className="transition hover:text-white">الديناصور</a>
+            <a href="#tools" className="transition hover:text-white">خدمات</a>
             <a href="#ai" className="transition hover:text-white">المساعد</a>
             <a href="#faq" className="transition hover:text-white">الأسئلة</a>
           </nav>
@@ -61,7 +65,7 @@ export default function Home() {
           <p className="text-xl font-bold md:text-2xl">العب. نزّل. خلّي اليوم ممتع.</p>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-loose text-neutral-400 md:text-base">
             خمسة ألعاب بس، كلها باسم ADAM: Subway by adam، ADAM Football، ADAM Strike، يومك أهم، وADAM Game.
-            وADAM Strike تقدر تلعبه هنا في المتصفح من غير تحميل.
+            وADAM Strike ولعبة الديناصور تقدر تلعبهم هنا في المتصفح من غير تحميل.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <a href="#games" className="rounded-xl bg-white px-6 py-3.5 text-sm font-bold text-black transition hover:bg-neutral-300">
@@ -74,8 +78,8 @@ export default function Home() {
           <dl className="mt-10 flex flex-wrap justify-center gap-10 border-t border-white/10 pt-7">
             {[
               ["٥", "ألعاب للتنزيل"],
-              ["١", "لعبة في المتصفح"],
-              ["∞", "مرح ومتعة"],
+              ["٢", "لعبتين في المتصفح"],
+              ["٣", "خدمات جوه الموقع"],
             ].map(([value, label]) => (
               <div key={label}>
                 <dt className="text-2xl font-black">{value}</dt>
@@ -131,6 +135,24 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Dinosaur game */}
+      <section id="dino" className="border-t border-white/10">
+        <div className="mx-auto max-w-6xl px-6 py-24">
+          <div className="mb-9 flex flex-wrap items-end justify-between gap-5">
+            <div>
+              <p className="text-xs font-bold tracking-[0.25em] text-neutral-500">لعبة تانية</p>
+              <h2 className="mt-4 text-4xl font-black tracking-tight md:text-5xl">ADAM Dino</h2>
+            </div>
+            <p className="max-w-md text-sm leading-loose text-neutral-400">
+              اضغط مسافة أو المس الشاشة وقفّز فوق الصبار. كل ما تعدي أكتر، السرعة بتزيد.
+            </p>
+          </div>
+          <DinoGame />
+        </div>
+      </section>
+
+      <Tools />
+
       {/* AI */}
       <section id="ai" className="border-t border-white/10">
         <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-24 md:grid-cols-2">
@@ -138,7 +160,7 @@ export default function Home() {
             <p className="text-xs font-bold tracking-[0.25em] text-neutral-500">المساعد الذكي</p>
             <h2 className="mt-4 text-4xl font-black tracking-tight md:text-5xl">اسأل، والباقي علينا</h2>
             <p className="mt-5 leading-loose text-neutral-400">
-              اكتب سؤالك عن الألعاب أو التحميل وهيرد عليك فوراً بالعربي. المساعد متصل بـ Vercel AI Gateway
+              اكتب سؤالك عن الألعاب أو التحميل وهيرد عليك فوراً بالعربي. المساعد متصل بنموذج ذكي
               وبيشتغل جوه الصفحة من غير ما تروح لحاجة تانية.
             </p>
             <div className="mt-8 space-y-3 text-sm text-neutral-500">
