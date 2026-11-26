@@ -444,11 +444,13 @@ export default function SpaceShooter() {
   }, []);
 
   const beginGame = () => {
+    activeRef.current = true;
     if (over) {
       resetRef.current();
       playSound("start");
     } else {
       startRef.current();
+      setStarted(true);
     }
   };
 
