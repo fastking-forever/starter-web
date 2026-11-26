@@ -13,13 +13,13 @@ type Game = {
 };
 
 const games: Game[] = [
-  { name: "Subway Surfers", desc: "جري ومراوغة في الشارع — نسخة ADAM", file: "subway-surfers.apk", size: "3.6 MB", category: "android", tag: "أندرويد", glyph: "⤴" },
-  { name: "ADAM Football", desc: "كرة قدم على الجوال", file: "adam-football.apk", size: "3 MB", category: "football", tag: "أندرويد · كرة", glyph: "◉" },
-  { name: "ADAM Strike", desc: "لعبة فضائية بضرب النار", file: "adam-strike.apk", size: "3.9 MB", category: "space", tag: "أندرويد · فضاء", glyph: "✦" },
+  { name: "Subway Surfers", desc: "جري ومراوغة في الشارع — نسخة ADAM (سبواي)", file: "subway-surfers.apk", size: "3.6 MB", category: "android", tag: "أندرويد", glyph: "⤴" },
+  { name: "ADAM Football", desc: "كرة قدم على الجوال (كوره)", file: "adam-football.apk", size: "3 MB", category: "football", tag: "أندرويد · كرة", glyph: "◉" },
+  { name: "ADAM Strike", desc: "لعبة فضائية بضرب النار (استريك · نت في الفضاء)", file: "adam-strike.apk", size: "3.9 MB", category: "space", tag: "أندرويد · فضاء", glyph: "✦" },
   { name: "يومك أهم", desc: "لعبة اليوم والوقت", file: "waqtak-aham.apk", size: "2.6 MB", category: "android", tag: "أندرويد", glyph: "◷" },
-  { name: "ADAM Game", desc: "أول لعبة في السلسلة", file: "adam-game.apk", size: "4 MB", category: "android", tag: "أندرويد", glyph: "◆" },
-  { name: "Golazo", desc: "لعبة كرة قدم كاملة", file: "golazo.zip", size: "12.7 MB", category: "football", tag: " ZIP · كرة", glyph: "⚽" },
-  { name: "Football HTML", desc: "افتحها مباشرة في المتصفح", file: "football-game.html", size: "0.03 MB", category: "football", tag: "HTML", glyph: "▣" },
+  { name: "ADAM Game", desc: "أول لعبة في السلسلة (اول واحده)", file: "adam-game.apk", size: "4 MB", category: "android", tag: "أندرويد", glyph: "◆" },
+  { name: "Golazo", desc: "لعبة كرة قدم كاملة (كوره)", file: "golazo.zip", size: "12.7 MB", category: "football", tag: "ZIP · كرة", glyph: "⚽" },
+  { name: "Football HTML", desc: "افتحها مباشرة في المتصفح (كوره)", file: "football-game.html", size: "0.03 MB", category: "football", tag: "HTML", glyph: "▣" },
   { name: "ADAM City", desc: "مدينة واستكشاف", file: "adam-city.zip", size: "0.5 MB", category: "browser", tag: "ZIP", glyph: "▦" },
   { name: "Light Jockey", desc: "تحدي الضوء والإيقاع", file: "light-jockey.zip", size: "0.9 MB", category: "browser", tag: "ZIP", glyph: "☀" },
   { name: "IsoCity", desc: "بناء مدينة بمنظور isometric", file: "isocity.zip", size: "0.7 MB", category: "browser", tag: "ZIP", glyph: "◫" },

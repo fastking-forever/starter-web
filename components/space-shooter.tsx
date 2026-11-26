@@ -140,6 +140,7 @@ export default function SpaceShooter() {
               setScore(sc);
               enemies.splice(i, 1);
               break;
+              continue;
             }
           }
         }
