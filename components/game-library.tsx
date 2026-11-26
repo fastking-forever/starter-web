@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import GameCover, { type CoverKind } from "./game-cover";
 
 type Game = {
   name: string;
@@ -9,7 +10,7 @@ type Game = {
   size: string;
   category: "android" | "football" | "space" | "utility";
   tag: string;
-  glyph: string;
+  cover: CoverKind;
   keywords: string;
 };
 
@@ -23,7 +24,7 @@ const games: Game[] = [
     size: "3.75 MB",
     category: "android",
     tag: "أندرويد · جري",
-    glyph: "⤴",
+    cover: "subway",
     keywords: "subway surfers zurich سبواي زيورخ جري مراوغة قطار",
   },
   {
@@ -33,7 +34,7 @@ const games: Game[] = [
     size: "3.18 MB",
     category: "football",
     tag: "أندرويد · كرة",
-    glyph: "◉",
+    cover: "football",
     keywords: "football كورة كرة قدم ماتش ايطاليا فرنسا هدف حارس",
   },
   {
@@ -43,7 +44,7 @@ const games: Game[] = [
     size: "4.05 MB",
     category: "space",
     tag: "أندرويد · فضاء",
-    glyph: "✦",
+    cover: "strike",
     keywords: "strike استريك فضاء ضرب نار موجات بوس shield dash نت في الفضاء",
   },
   {
@@ -53,7 +54,7 @@ const games: Game[] = [
     size: "2.75 MB",
     category: "utility",
     tag: "أندرويد · تنظيم",
-    glyph: "◷",
+    cover: "waqtak",
     keywords: "وقتك اهم تودو ليست منبه تنبيهات إشعارات وقت يوممهام",
   },
   {
@@ -63,7 +64,7 @@ const games: Game[] = [
     size: "4.24 MB",
     category: "android",
     tag: "أندرويد · كلاسيك",
-    glyph: "◆",
+    cover: "bricks",
     keywords: "adam game نيون بريكر برك اكسر الطوب كرة مضرب powers",
   },
 ];
@@ -218,9 +219,7 @@ export default function GameLibrary() {
                 className="group rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition hover:-translate-y-1 hover:border-[#7FF2B0]/50 hover:bg-white/[0.06]"
               >
                 <div className="flex items-start justify-between gap-2">
-                  <span aria-hidden="true" className="grid h-11 w-11 place-items-center rounded-xl border border-white/15 text-xl text-[#7FF2B0] transition group-hover:border-[#7FF2B0]/50">
-                    {g.glyph}
-                  </span>
+                  <GameCover kind={g.cover} />
                   <span className="rounded-full border border-white/10 px-2.5 py-1 text-[10px] text-neutral-400">{g.tag}</span>
                 </div>
                 <h3 className="mt-5 text-lg font-bold">{g.name}</h3>
