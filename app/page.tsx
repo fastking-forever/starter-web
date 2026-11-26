@@ -60,7 +60,7 @@ export default function Home() {
             <span className="grid h-9 w-9 place-items-center rounded-xl border border-white/25 bg-white/10 font-display text-sm font-black shadow-[0_0_16px_rgba(255,255,255,0.18)]">
               A
             </span>
-            <span className="font-display text-lg font-black tracking-wide">ADAM</span>
+            <span className="font-display text-lg font-black tracking-wide">ADAM #</span>
           </a>
         </div>
         <div className="accent-line" />
@@ -275,7 +275,7 @@ export default function Home() {
           <div className="flex flex-wrap items-center justify-between gap-6">
             <div className="flex items-center gap-2.5">
               <span className="grid h-8 w-8 place-items-center rounded-lg border border-white/25 bg-white/10 font-display text-sm font-black">A</span>
-              <span className="font-display font-black tracking-wide">ADAM</span>
+              <span className="font-display font-black tracking-wide">ADAM #</span>
             </div>
             <div className="text-sm text-white/55">
               <a href="mailto:adamehab828@gmail.com" className="transition hover:text-white">adamehab828@gmail.com</a>
