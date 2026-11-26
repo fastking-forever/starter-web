@@ -40,8 +40,9 @@ export default function ContactCards() {
       ok = document.execCommand("copy");
       field.remove();
     }
-    setCopied(ok ? value : "");
-    if (ok) window.setTimeout(() => setCopied(""), 1600);
+    void ok;
+    setCopied(value);
+    window.setTimeout(() => setCopied(""), 1600);
   }
 
   return (

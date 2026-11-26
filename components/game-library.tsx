@@ -42,13 +42,21 @@ export default function GameLibrary() {
   }, [query, filter]);
 
   async function copyLink(file: string) {
+    const link = `${window.location.origin}/downloads/${file}`;
     try {
-      await navigator.clipboard.writeText(`${window.location.origin}/downloads/${file}`);
-      setCopied(file);
-      window.setTimeout(() => setCopied(null), 1800);
+      await navigator.clipboard.writeText(link);
     } catch {
-      setCopied(null);
+      const field = document.createElement("textarea");
+      field.value = link;
+      field.style.position = "fixed";
+      field.style.opacity = "0";
+      document.body.appendChild(field);
+      field.select();
+      document.execCommand("copy");
+      field.remove();
     }
+    setCopied(file);
+    window.setTimeout(() => setCopied(null), 1800);
   }
 
   return (
