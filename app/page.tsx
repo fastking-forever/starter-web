@@ -149,14 +149,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Moving strip */}
-      <div className="overflow-hidden border-y border-white/10 bg-white py-3">
-        <div className="animate-marquee flex w-max gap-10 whitespace-nowrap font-mono text-xs font-bold tracking-[0.35em] text-black">
-          {Array.from({ length: 6 }, (_, i) => (
-            <span key={i}>ADAM ★ INSTANT DOWNLOAD ★ PLAY ANYWHERE ★</span>
-          ))}
-        </div>
-      </div>
+      {/* Divider */}
+      <div className="border-t border-white/10" aria-hidden="true" />
 
       {/* Advantages */}
       <section id="why" className="mx-auto max-w-6xl px-6 py-24">
