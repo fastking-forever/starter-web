@@ -1,4 +1,5 @@
 import AiChat from "@/components/ai-chat";
+import ContactCards from "@/components/contact-cards";
 import DinoGame from "@/components/dino-game";
 import Faq from "@/components/faq";
 import GameLibrary from "@/components/game-library";
@@ -7,116 +8,160 @@ import ImageStudio from "@/components/image-studio";
 import SpaceShooter from "@/components/space-shooter";
 import Tools from "@/components/tools";
 
-const features = [
-  { n: "01", title: "تحميل مباشر", body: "اضغط و	nزّل. مفيش تسجيل، مفيش انتظار، مفيش تعقيد.", icon: "↓" },
-  { n: "02", title: "العب من الموقع", body: "لعبتين شغالتين جوه الصفحة: ADAM Strike وADAM Dino.", icon: "✦" },
-  { n: "03", title: "استوديو وخدمات", body: "صور بالذكاء الاصطناعي وQR وعجلة اختيار وأدوات نص ومساعد ذكي.", icon: "◈" },
+const navLinks = [
+  { href: "#games", label: "الألعاب" },
+  { href: "#play", label: "العب دلوقتي" },
+  { href: "#dino", label: "الديناصور" },
+  { href: "#wheel", label: "العجلة" },
+  { href: "#tools", label: "خدمات" },
+  { href: "#create", label: "استوديو الصور" },
+  { href: "#ai", label: "المساعد" },
+  { href: "#faq", label: "الأسئلة" },
+];
+
+const stats = [
+  { value: "٥", label: "ألعاب للتنزيل", icon: "↓" },
+  { value: "٢", label: "لعبة في المتصفح", icon: "✦" },
+  { value: "٧", label: "أدوات وتجارب", icon: "◈" },
+];
+
+const advantages = [
+  { title: "تحميل مباشر", body: "ملفات APK جاهزة للتحميل بضغطة واحدة، من غير تسجيل أو انتظار.", icon: "↓" },
+  { title: "العب في المتصفح", body: "ADAM Strike وADAM Dino شغالين جوه الموقع من غير أي تحميل.", icon: "✦" },
+  { title: "استوديو ذكي", body: "اكتب فكرتك بالعربي وهتتحول لصورة بالأبيض والأسود.", icon: "✧" },
+  { title: "أدوات فورية", body: "حاسبة، كلمة مرور، مؤقت، QR، وتنظيف نصوص عربية.", icon: "◈" },
+  { title: "عجلة ADAM", body: "مش عارف تلعب إيه؟ دوّر العجلة وهتختار لك لعبة.", icon: "◎" },
+  { title: "مساعد بالعربي", body: "اسأل عن أي لعبة أو تحميل وهيرد عليك فوراً جوه الصفحة.", icon: "◉" },
 ];
 
 export default function Home() {
   return (
-    <main className="overflow-hidden bg-[#070707]">
-      {/* Header */}
-      <header className="sticky top-0 z-40 border-b border-white/10 bg-[#070707]/85 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
-          <a href="#" className="flex items-center gap-2.5 font-black tracking-tight">
-            <span className="grid h-8 w-8 place-items-center rounded-lg bg-white text-sm text-black">A</span>
-            <span className="text-lg">ADAM</span>
-          </a>
-          <nav className="hidden items-center gap-7 text-sm text-neutral-400 md:flex">
-            <a href="#games" className="transition hover:text-white">الألعاب</a>
-            <a href="#play" className="transition hover:text-white">العب دلوقتي</a>
-            <a href="#dino" className="transition hover:text-white">الديناصور</a>
-            <a href="#wheel" className="transition hover:text-white">العجلة</a>
-            <a href="#tools" className="transition hover:text-white">خدمات</a>
-            <a href="#create" className="transition hover:text-white">استوديو الصور</a>
-            <a href="#ai" className="transition hover:text-white">المساعد</a>
-            <a href="#faq" className="transition hover:text-white">الأسئلة</a>
-          </nav>
-          <a
-            href="#games"
-            className="rounded-full bg-white px-4 py-2 text-xs font-bold text-black transition hover:bg-neutral-300"
-          >
+    <main className="overflow-hidden">
+      {/* Fixed navbar */}
+      <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#030604]/75 backdrop-blur-xl">
+        <div className="relative mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-5 md:px-8">
+          <a href="#games" className="btn-primary !px-4 !py-2 text-[11px] md:!px-5">
             نزّل دلوقتي ↓
           </a>
+
+          <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 rounded-full border border-white/10 bg-white/[0.035] p-1 backdrop-blur-xl lg:flex">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="rounded-full px-3.5 py-1.5 text-xs font-bold text-white/60 transition hover:bg-white/10 hover:text-white"
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
+
+          <a href="#home" className="flex items-center gap-2.5">
+            <span className="grid h-9 w-9 place-items-center rounded-xl border border-white/25 bg-white/10 font-display text-sm font-black shadow-[0_0_16px_rgba(255,255,255,0.18)]">
+              A
+            </span>
+            <span className="font-display text-lg font-black tracking-wide">ADAM</span>
+          </a>
         </div>
+        <div className="accent-line" />
       </header>
 
       {/* Hero */}
-      <section className="relative mx-auto max-w-7xl px-4 pb-20 pt-10 md:px-8 md:pt-16">
-        <div className="mono-grid pointer-events-none absolute inset-x-0 top-0 h-[540px] opacity-70 [mask-image:linear-gradient(to_bottom,black,transparent)]" />
-        <div className="relative flex items-center justify-between border-b border-white/10 pb-4 text-[10px] font-bold tracking-[0.3em] text-neutral-500">
-          <span>ADAM // ARCADE</span>
-          <span>EST. 2026</span>
-        </div>
+      <section id="home" className="relative flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center overflow-hidden px-5 pb-16 pt-28 text-center md:px-8">
+        <div className="orb orb-one" />
+        <div className="orb orb-two" />
+        <div className="mono-grid pointer-events-none absolute inset-0 opacity-60 [mask-image:radial-gradient(circle_at_50%_35%,black,transparent_70%)]" />
 
-        <div className="relative mt-8 text-center">
-          <p className="pixel mb-3 text-[10px] text-neutral-400">INSERT COIN <span className="blink">█</span> PRESS START</p>
-          <h1 className="sr-only">ADAM</h1>
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-            aria-label="ADAM — مقدمة متحركة"
-            className="mx-auto w-full max-w-5xl rounded-2xl border border-white/10"
-          >
-            <source src="/adam-intro.mp4" type="video/mp4" />
-          </video>
-        </div>
-
-        <div className="relative mx-auto mt-8 max-w-4xl border-t border-white/15 pt-8 text-center">
-          <p className="text-xl font-bold md:text-2xl">العب. نزّل. خلّي اليوم ممتع.</p>
-          <p className="mx-auto mt-4 max-w-2xl text-sm leading-loose text-neutral-400 md:text-base">
-            خمسة ألعاب بس، كلها باسم ADAM: Subway by adam، ADAM Football، ADAM Strike، يومك أهم، وADAM Game.
-            وADAM Strike ولعبة الديناصور تقدر تلعبهم هنا في المتصفح من غير تحميل، وتقدر كمان تولّد صورة بالذكاء الاصطناعي.
+        <div className="relative z-10 w-full max-w-4xl">
+          <span className="section-tag">◈ Premium Arabic Arcade</span>
+          <h1 className="font-display mt-7 text-5xl font-black leading-[1.1] md:text-7xl">
+            أهلًا بك في <span className="gradient-text">ADAM</span>
+          </h1>
+          <p className="mx-auto mt-5 max-w-2xl text-base leading-loose text-white/60 md:text-lg">
+            خمسة ألعاب باسم ADAM، ولعبتين تقدر تلعبهم فوراً في المتصفح،
+            واستوديو صور وأدوات ذكية تجربها من غير تسجيل.
           </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <a href="#games" className="rounded-xl bg-white px-6 py-3.5 text-sm font-bold text-black transition hover:bg-neutral-300">
-              تصفّح الألعاب
+
+          <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
+            <a href="#games" className="btn-primary">
+              تصفّح الألعاب <span>↓</span>
             </a>
-            <a href="#play" className="rounded-xl border border-white/25 px-6 py-3.5 text-sm font-bold transition hover:border-white hover:bg-white/5">
-              العب ADAM Strike
+            <a href="#play" className="btn-ghost">
+              العب ADAM Strike <span>↗</span>
             </a>
           </div>
-          <dl className="mt-10 flex flex-wrap justify-center gap-10 border-t border-white/10 pt-7">
-            {[
-              ["٥", "ألعاب للتنزيل"],
-              ["٢", "لعبتين في المتصفح"],
-              ["٧", "أدوات وتجارب"],
-            ].map(([value, label]) => (
-              <div key={label}>
-                <dt className="text-2xl font-black">{value}</dt>
-                <dd className="mt-1 text-xs text-neutral-500">{label}</dd>
+
+          <div className="mx-auto mt-14 grid max-w-2xl gap-3 sm:grid-cols-3">
+            {stats.map((stat) => (
+              <div key={stat.label} className="glass-card rounded-2xl px-4 py-6">
+                <div className="diamond mx-auto mb-4 text-xs text-white">{stat.icon}</div>
+                <p className="font-display text-3xl font-black">{stat.value}</p>
+                <p className="mt-1 font-mono text-[11px] tracking-widest text-white/55">{stat.label}</p>
               </div>
             ))}
-          </dl>
+          </div>
+
+          <div className="mt-12 flex justify-center">
+            <a href="#showcase" aria-label="انزل للأسفل" className="animate-bounce-down text-white/50 transition hover:text-white">
+              ↓
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Intro showcase */}
+      <section id="showcase" className="border-t border-white/10 px-5 py-16 md:px-8 md:py-24">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-8 text-center">
+            <span className="section-tag">ADAM Intro</span>
+            <h2 className="section-title mt-5">مقدمة ADAM</h2>
+            <p className="section-desc mx-auto mt-3 max-w-xl">شوف البداية، وبعدين اختار لعبتك وابدأ.</p>
+          </div>
+          <div className="glass-card overflow-hidden rounded-2xl p-2">
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              aria-label="ADAM — مقدمة متحركة"
+              className="mx-auto w-full rounded-xl border border-white/10"
+            >
+              <source src="/adam-intro.mp4" type="video/mp4" />
+            </video>
+          </div>
         </div>
       </section>
 
       {/* Moving strip */}
       <div className="overflow-hidden border-y border-white/10 bg-white py-3">
-        <div className="flex w-max gap-10 whitespace-nowrap text-xs font-black tracking-[0.35em] text-black animate-marquee">
+        <div className="animate-marquee flex w-max gap-10 whitespace-nowrap font-mono text-xs font-bold tracking-[0.35em] text-black">
           {Array.from({ length: 6 }, (_, i) => (
-            <span key={i}>ADAM ★ INSERT COIN ★ PLAY ★ REPEAT ★</span>
+            <span key={i}>ADAM ★ INSTANT DOWNLOAD ★ PLAY ANYWHERE ★</span>
           ))}
         </div>
       </div>
 
-      {/* Features */}
-      <section className="mx-auto max-w-6xl px-6 py-24">
-        <p className="text-xs font-bold tracking-[0.25em] text-neutral-500">ليه ADAM؟</p>
-        <h2 className="mt-4 text-4xl font-black tracking-tight md:text-5xl">ثلاث حاجات بتفرق</h2>
-        <div className="mt-12 grid gap-5 md:grid-cols-3">
-          {features.map((f) => (
-            <article key={f.n} className="group rounded-2xl border border-white/10 bg-white/[0.02] p-7 transition hover:-translate-y-1 hover:border-white/40 hover:bg-white/[0.06]">
+      {/* Advantages */}
+      <section id="why" className="mx-auto max-w-6xl px-6 py-24">
+        <div className="text-center">
+          <span className="section-tag">ليه ADAM؟</span>
+          <h2 className="section-title mt-5">موقع واحد، كل اللعب</h2>
+          <p className="section-desc mx-auto mt-3 max-w-2xl">
+            كل حاجة هنا مصممة عشان توصل للعبتك في أسرع وقت، وتجرب حاجات جديدة بعدها.
+          </p>
+        </div>
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {advantages.map((item) => (
+            <article key={item.title} className="glass-card rounded-2xl p-7">
               <div className="flex items-center justify-between">
-                <span className="font-mono text-xs text-neutral-600">/{f.n}</span>
-                <span className="text-2xl text-neutral-500 transition group-hover:text-white">{f.icon}</span>
+                <span className="grid h-11 w-11 place-items-center rounded-xl border border-white/15 bg-white/5 text-lg text-white">
+                  {item.icon}
+                </span>
+                <span className="font-mono text-[11px] tracking-widest text-white/35">ADAM</span>
               </div>
-              <h3 className="mt-10 text-xl font-bold">{f.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-neutral-400">{f.body}</p>
+              <h3 className="mt-8 text-xl font-black">{item.title}</h3>
+              <p className="mt-3 text-sm leading-loose text-white/55">{item.body}</p>
             </article>
           ))}
         </div>
@@ -127,13 +172,11 @@ export default function Home() {
       {/* Playable game */}
       <section id="play" className="border-t border-white/10 bg-white/[0.015]">
         <div className="mx-auto max-w-6xl px-6 py-24">
-          <div className="mb-9 flex flex-wrap items-end justify-between gap-5">
-            <div>
-              <p className="text-xs font-bold tracking-[0.25em] text-neutral-500">تجربة تفاعلية</p>
-              <h2 className="mt-4 text-4xl font-black tracking-tight md:text-5xl">العب من غير تحميل</h2>
-            </div>
-            <p className="max-w-md text-sm leading-loose text-neutral-400">
-             نسخة المتصفح من ADAM Strike: حرّك السفينة واضرب النار. بمفيش تحميل وبدون تسجيل.
+          <div className="mb-10 text-center">
+            <span className="section-tag">تجربة تفاعلية</span>
+            <h2 className="section-title mt-5">العب من غير تحميل</h2>
+            <p className="section-desc mx-auto mt-3 max-w-xl">
+              نسخة المتصفح من ADAM Strike: حرّك السفينة واضرب النار. بمفيش تحميل وبدون تسجيل.
             </p>
           </div>
           <SpaceShooter />
@@ -143,12 +186,10 @@ export default function Home() {
       {/* Dinosaur game */}
       <section id="dino" className="border-t border-white/10">
         <div className="mx-auto max-w-6xl px-6 py-24">
-          <div className="mb-9 flex flex-wrap items-end justify-between gap-5">
-            <div>
-              <p className="text-xs font-bold tracking-[0.25em] text-neutral-500">لعبة تانية</p>
-              <h2 className="mt-4 text-4xl font-black tracking-tight md:text-5xl">ADAM Dino</h2>
-            </div>
-            <p className="max-w-md text-sm leading-loose text-neutral-400">
+          <div className="mb-10 text-center">
+            <span className="section-tag">لعبة تانية</span>
+            <h2 className="section-title mt-5">ADAM Dino</h2>
+            <p className="section-desc mx-auto mt-3 max-w-xl">
               اضغط مسافة أو المس الشاشة وقفّز فوق الصبار. كل ما تعدي أكتر، السرعة بتزيد.
             </p>
           </div>
@@ -157,14 +198,12 @@ export default function Home() {
       </section>
 
       {/* Random wheel */}
-      <section id="wheel" className="border-t border-white/10">
+      <section id="wheel" className="border-t border-white/10 bg-white/[0.015]">
         <div className="mx-auto max-w-6xl px-6 py-24">
-          <div className="mb-9 flex flex-wrap items-end justify-between gap-5">
-            <div>
-              <p className="text-xs font-bold tracking-[0.25em] text-neutral-500">اختار بسرعة</p>
-              <h2 className="mt-4 text-4xl font-black tracking-tight md:text-5xl">عجلة ADAM</h2>
-            </div>
-            <p className="max-w-md text-sm leading-loose text-neutral-400">
+          <div className="mb-10 text-center">
+            <span className="section-tag">اختر بسرعة</span>
+            <h2 className="section-title mt-5">عجلة ADAM</h2>
+            <p className="section-desc mx-auto mt-3 max-w-xl">
               مش عارف تلعب إيه؟ دوّر العجلة وهتختار لك من الألعاب الخمسة.
             </p>
           </div>
@@ -180,13 +219,13 @@ export default function Home() {
       <section id="ai" className="border-t border-white/10">
         <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-24 md:grid-cols-2">
           <div>
-            <p className="text-xs font-bold tracking-[0.25em] text-neutral-500">المساعد الذكي</p>
-            <h2 className="mt-4 text-4xl font-black tracking-tight md:text-5xl">اسأل، والباقي علينا</h2>
-            <p className="mt-5 leading-loose text-neutral-400">
+            <span className="section-tag">المساعد الذكي</span>
+            <h2 className="section-title mt-5">اسأل، والباقي علينا</h2>
+            <p className="section-desc mt-5">
               اكتب سؤالك عن الألعاب أو التحميل وهيرد عليك فوراً بالعربي. المساعد متصل بنموذج ذكي
               وبيشتغل جوه الصفحة من غير ما تروح لحاجة تانية.
             </p>
-            <div className="mt-8 space-y-3 text-sm text-neutral-500">
+            <div className="mt-8 space-y-3 text-sm text-white/60">
               <p>✓ يشرح إزاي تثبّت APK</p>
               <p>✓ يساعدك تختار لعبة</p>
               <p>✓ يرد بالعربي في أي وقت</p>
@@ -196,23 +235,38 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Contact */}
+      <section id="contact" className="border-t border-white/10 bg-white/[0.015]">
+        <div className="mx-auto max-w-6xl px-6 py-24">
+          <div className="mb-10 text-center">
+            <span className="section-tag">تواصل معانا</span>
+            <h2 className="section-title mt-5">مين ورا ADAM؟</h2>
+            <p className="section-desc mx-auto mt-3 max-w-xl">
+              أي استفسار عن التحميل أو الألعاب، البريد والهاتف قدّامك ونسخهم في ضغطة.
+            </p>
+          </div>
+          <ContactCards />
+        </div>
+      </section>
+
       <Faq />
 
       {/* Footer */}
       <footer className="border-t border-white/10">
         <div className="mx-auto max-w-6xl px-6 py-10">
+          <div className="accent-line mx-auto mb-7 max-w-3xl" />
           <div className="flex flex-wrap items-center justify-between gap-6">
-            <div className="flex items-center gap-2.5 font-black">
-              <span className="grid h-8 w-8 place-items-center rounded-lg bg-white text-sm text-black">A</span>
-              <span>ADAM</span>
+            <div className="flex items-center gap-2.5">
+              <span className="grid h-8 w-8 place-items-center rounded-lg border border-white/25 bg-white/10 font-display text-sm font-black">A</span>
+              <span className="font-display font-black tracking-wide">ADAM</span>
             </div>
-            <div className="text-sm text-neutral-400">
+            <div className="text-sm text-white/55">
               <a href="mailto:adamehab828@gmail.com" className="transition hover:text-white">adamehab828@gmail.com</a>
-              <span className="mx-3 text-neutral-700">—</span>
-              <a href="tel:01069607847" className="transition hover:text-white" dir="ltr">01069607847</a>
+              <span className="mx-3 text-white/25">—</span>
+              <a href="tel:01069607847" dir="ltr" className="transition hover:text-white">01069607847</a>
             </div>
           </div>
-          <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-6 text-xs text-neutral-600">
+          <div className="mt-8 border-t border-white/10 pt-6 text-xs text-white/40">
             <span>© 2026 ADAM — adamehab828@gmail.com — 01069607847</span>
           </div>
         </div>

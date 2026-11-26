@@ -54,16 +54,14 @@ export default function GameLibrary() {
   return (
     <section id="games" className="border-t border-white/10">
       <div className="mx-auto max-w-6xl px-6 py-24">
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <div>
-            <p className="text-xs font-bold tracking-[0.25em] text-neutral-500">مكتبة الألعاب</p>
-            <h2 className="mt-4 text-4xl font-black tracking-tight md:text-5xl">كل ألعاب ADAM</h2>
-            <p className="mt-4 max-w-xl leading-loose text-neutral-400">
-              ابحث، صفّي، ونزّل مباشرة. بدون تسجيل وبدون انتظار.
-            </p>
-          </div>
-          <div className="rounded-full border border-white/15 px-5 py-2 text-sm text-neutral-400">
-            <span className="font-bold text-white">{visible.length}</span> لعبة متاحة
+        <div className="text-center">
+          <span className="section-tag">مكتبة الألعاب</span>
+          <h2 className="section-title mt-5">كل ألعاب ADAM</h2>
+          <p className="section-desc mx-auto mt-3 max-w-xl">
+            ابحث، صفّي، ونزّل مباشرة. بدون تسجيل وبدون انتظار.
+          </p>
+          <div className="mt-5 inline-flex rounded-full border border-white/15 px-5 py-2 text-sm text-white/60">
+            <span className="font-bold text-white">{visible.length}</span>&nbsp; لعبة متاحة
           </div>
         </div>
 

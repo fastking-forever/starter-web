@@ -31,8 +31,10 @@ export default function Faq() {
   return (
     <section id="faq" className="border-t border-white/10 bg-white/[0.015]">
       <div className="mx-auto max-w-4xl px-6 py-24">
-        <p className="text-xs font-bold tracking-[0.25em] text-neutral-500">الأسئلة الشائعة</p>
-        <h2 className="mt-4 text-4xl font-black tracking-tight md:text-5xl">إجابات سريعة</h2>
+        <div className="text-center">
+          <span className="section-tag">الأسئلة الشائعة</span>
+          <h2 className="section-title mt-5">إجابات سريعة</h2>
+        </div>
         <div className="mt-12 divide-y divide-white/10 border-y border-white/10">
           {items.map((item, i) => (
             <div key={item.q}>

@@ -294,11 +294,13 @@ export default function Tools() {
   return (
     <section id="tools" className="border-t border-white/10 bg-white/[0.015]">
       <div className="mx-auto max-w-6xl px-6 py-24">
-        <p className="text-xs font-bold tracking-[0.25em] text-neutral-500">خدمات ADAM</p>
-        <h2 className="mt-4 text-4xl font-black tracking-tight md:text-5xl">أدوات جوه الموقع</h2>
-        <p className="mt-4 max-w-xl text-sm leading-loose text-neutral-400">
-          حاسبة، كلمة مرور، مؤقت، QR، وتنظيف نصوص عربية — كلها شغالة من غير تسجيل أو تحميل.
-        </p>
+        <div className="text-center">
+          <span className="section-tag">خدمات ADAM</span>
+          <h2 className="section-title mt-5">أدوات جوه الموقع</h2>
+          <p className="section-desc mx-auto mt-3 max-w-xl">
+            حاسبة، كلمة مرور، مؤقت، QR، وتنظيف نصوص عربية — كلها شغالة من غير تسجيل أو تحميل.
+          </p>
+        </div>
         <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           <Calculator />
           <PasswordMaker />

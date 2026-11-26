@@ -130,9 +130,9 @@ export default function ImageStudio() {
       <div className="mx-auto max-w-6xl px-6 py-24">
         <div className="mb-10 flex flex-wrap items-end justify-between gap-5">
           <div>
-            <p className="text-xs font-bold tracking-[0.25em] text-neutral-500">استوديو ADAM</p>
-            <h2 className="mt-4 text-4xl font-black tracking-tight md:text-5xl">اكتب فكرة، وشوفها صورة</h2>
-            <p className="mt-4 max-w-xl text-sm leading-loose text-neutral-400">
+            <span className="section-tag">استوديو ADAM</span>
+            <h2 className="section-title mt-5">اكتب فكرة، وشوفها صورة</h2>
+            <p className="section-desc mt-3 max-w-xl">
               ولّد صورة بالذكاء الاصطناعي من وصف بالعربي. النتيجة بالأبيض والأسود عشان تفضل روح الموقع.
             </p>
           </div>
