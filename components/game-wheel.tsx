@@ -79,6 +79,7 @@ export default function GameWheel() {
           ref={canvasRef}
           width={320}
           height={320}
+          role="img"
           aria-label="عجلة اختيار اللعبة"
           className="block rounded-full border border-white/25"
           style={{
@@ -96,12 +97,12 @@ export default function GameWheel() {
         <button
           onClick={spin}
           disabled={spinning}
-          className="mt-6 rounded-xl bg-white px-6 py-3 text-sm font-bold text-black transition hover:bg-neutral-300 disabled:opacity-50"
+          className="cta-mint mt-6 rounded-xl px-6 py-3 text-sm font-bold"
         >
           {spinning ? "الدوّارة لسه بتلف..." : "دوّر العجلة ↻"}
         </button>
         {winner !== null && (
-          <div className="mt-5 rounded-xl border border-white/15 px-4 py-3 text-sm">
+          <div aria-live="polite" className="mt-5 rounded-xl border border-white/15 px-4 py-3 text-sm">
             <span className="text-neutral-500">طلعت لك: </span>
             <a href={options[winner].href} className="font-bold transition hover:underline">
               {options[winner].name}

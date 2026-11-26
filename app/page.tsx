@@ -193,7 +193,7 @@ export default function Home() {
             <span className="section-tag">تجربة تفاعلية</span>
             <h2 className="section-title mt-5">العب من غير تحميل</h2>
             <p className="section-desc mx-auto mt-3 max-w-xl">
-              نسخة المتصفح من ADAM Strike: حرّك السفينة واضرب النار. بمفيش تحميل وبدون تسجيل.
+              نسخة المتصفح من ADAM Strike: حرّك السفينة واضرب النار. من غير تحميل أو تسجيل.
             </p>
           </div>
           <SpaceShooter />

@@ -7,6 +7,10 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "ADAM | ألعابك في مكان واحد",
   description: "موقع ADAM: ألعاب للتنزيل، لعبة فضاء تفاعلية، ومساعد ذكي بالعربي.",
+  applicationName: "ADAM",
+  category: "games",
+  keywords: ["ADAM", "ألعاب ادم", "تحميل APK", "العاب للجوال", "ADAM Strike", "استوديو صور"],
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({

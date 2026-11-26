@@ -79,6 +79,7 @@ export default function GameLibrary() {
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
+              aria-label="ابحث عن لعبة"
               placeholder="ابحث عن لعبة..."
               className="w-full rounded-xl border border-white/15 bg-white/[0.03] px-4 py-3 pr-10 text-sm outline-none transition placeholder:text-neutral-600 focus:border-white/50"
             />
@@ -88,6 +89,7 @@ export default function GameLibrary() {
               <button
                 key={f.id}
                 onClick={() => setFilter(f.id)}
+                aria-pressed={filter === f.id}
                 className={`rounded-full border px-4 py-2 text-xs font-bold transition ${
                   filter === f.id
                     ? "border-white bg-white text-black"
@@ -121,6 +123,7 @@ export default function GameLibrary() {
                     <button
                       onClick={() => void copyLink(g.file)}
                       title="نسخ رابط التحميل"
+                      aria-label="نسخ رابط التحميل"
                       className="grid h-8 w-8 place-items-center rounded-lg border border-white/10 text-xs text-neutral-500 transition hover:border-white/40 hover:text-white"
                     >
                       {copied === g.file ? "✓" : "⧉"}
@@ -128,7 +131,7 @@ export default function GameLibrary() {
                     <a
                       href={`/downloads/${g.file}`}
                       download
-                      className="rounded-lg bg-white px-4 py-2 text-xs font-bold text-black transition hover:bg-neutral-300"
+                      className="cta-mint rounded-lg px-4 py-2 text-xs font-bold"
                     >
                       تحميل ↓
                     </a>

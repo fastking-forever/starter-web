@@ -39,16 +39,25 @@ export default function Faq() {
           {items.map((item, i) => (
             <div key={item.q}>
               <button
+                id={`faq-question-${i}`}
                 onClick={() => setOpen(open === i ? null : i)}
                 className="flex w-full items-center justify-between gap-5 py-6 text-right transition hover:text-white"
                 aria-expanded={open === i}
+                aria-controls={`faq-answer-${i}`}
               >
                 <span className="text-lg font-bold">{item.q}</span>
-                <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full border border-white/15 text-lg transition ${open === i ? "rotate-45 border-white" : "text-neutral-500"}`}>
+                <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full border border-white/15 text-lg transition ${
+                  open === i ? "rotate-45 border-[#7FF2B0] text-[#7FF2B0]" : "text-neutral-500"
+                }`}>
                   +
                 </span>
               </button>
-              <div className={`grid transition-all duration-300 ${open === i ? "grid-rows-[1fr] pb-6 opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
+              <div
+                id={`faq-answer-${i}`}
+                role="region"
+                aria-labelledby={`faq-question-${i}`}
+                className={`grid transition-all duration-300 ${open === i ? "grid-rows-[1fr] pb-6 opacity-100" : "grid-rows-[0fr] opacity-0"}`}
+              >
                 <div className="overflow-hidden">
                   <p className="max-w-2xl leading-loose text-neutral-400">{item.a}</p>
                 </div>

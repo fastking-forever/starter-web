@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 
 type Message = { role: "user" | "assistant"; content: string };
 
@@ -19,6 +19,12 @@ export default function AiChat() {
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const logRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const log = logRef.current;
+    if (log) log.scrollTop = log.scrollHeight;
+  }, [messages, loading]);
 
   async function send(text: string) {
     const question = text.trim();
@@ -61,8 +67,8 @@ export default function AiChat() {
     <div className="w-full max-w-2xl rounded-3xl border border-white/15 bg-white/[0.03] p-5 shadow-2xl shadow-black/60 backdrop-blur">
       <div className="mb-4 flex items-center gap-3 border-b border-white/10 pb-4">
         <span className="relative flex h-2.5 w-2.5">
-          <span className="absolute inline-flex h-full w-full animate-ring rounded-full bg-white/60" />
-          <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-white" />
+          <span className="absolute inline-flex h-full w-full animate-ring rounded-full bg-[#7FF2B0]/60" />
+          <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#7FF2B0]" />
         </span>
         <div>
           <p className="text-sm font-semibold">مساعد ADAM</p>
@@ -70,7 +76,7 @@ export default function AiChat() {
         </div>
       </div>
 
-      <div className="flex h-64 flex-col gap-3 overflow-y-auto pl-1">
+      <div ref={logRef} role="log" aria-live="polite" aria-label="محادثة مساعد ADAM" className="flex h-64 flex-col gap-3 overflow-y-auto pl-1">
         {messages.map((m, i) => (
           <div
             key={i}
@@ -106,13 +112,14 @@ export default function AiChat() {
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          aria-label="اكتب سؤالك لمساعد ADAM"
           placeholder="اكتب سؤالك..."
-          className="flex-1 rounded-xl border border-white/15 bg-black/40 px-4 py-3 text-sm outline-none placeholder:text-neutral-600 focus:border-white/60"
+          className="flex-1 rounded-xl border border-white/15 bg-black/40 px-4 py-3 text-sm outline-none placeholder:text-neutral-600 focus:border-[#7FF2B0]/60"
         />
         <button
           type="submit"
           disabled={loading}
-          className="rounded-xl bg-white px-5 py-3 text-sm font-bold text-black transition hover:bg-neutral-300 disabled:opacity-50"
+          className="cta-mint rounded-xl px-5 py-3 text-sm font-bold"
         >
           إرسال
         </button>

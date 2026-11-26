@@ -63,6 +63,7 @@ function PasswordMaker() {
   const [symbols, setSymbols] = useState(true);
   const [value, setValue] = useState("");
   const [copied, setCopied] = useState(false);
+  const [nonce, setNonce] = useState(0);
 
   useEffect(() => {
     const chars =
@@ -75,7 +76,7 @@ function PasswordMaker() {
       for (let i = 0; i < length; i += 1) random[i] = Math.floor(Math.random() * 2 ** 32);
     }
     setValue(Array.from(random, (n) => chars[n % chars.length]).join(""));
-  }, [length, symbols]);
+  }, [length, symbols, nonce]);
 
   async function copy() {
     try {
@@ -93,7 +94,14 @@ function PasswordMaker() {
       <p className="mt-2 text-xs text-neutral-500">كلمة عشوائية قوية، اتنسخها في ضغطة.</p>
       <div dir="ltr" className="mt-5 flex items-center gap-2 rounded-xl border border-white/15 bg-black px-4 py-3">
         <code className="min-w-0 flex-1 overflow-x-auto whitespace-nowrap font-mono text-sm">{value}</code>
-        <button onClick={() => void copy()} className="shrink-0 text-xs font-bold text-neutral-400 transition hover:text-white">
+        <button
+          onClick={() => setNonce((n) => n + 1)}
+          aria-label="توليد كلمة مرور جديدة"
+          className="shrink-0 text-sm text-neutral-400 transition hover:text-[#7FF2B0]"
+        >
+          ↻
+        </button>
+        <button onClick={() => void copy()} className="shrink-0 text-xs font-bold text-neutral-400 transition hover:text-[#7FF2B0]">
           {copied ? "تم ✓" : "نسخ ⧉"}
         </button>
       </div>
@@ -105,7 +113,7 @@ function PasswordMaker() {
           max={32}
           value={length}
           onChange={(e) => setLength(Number(e.target.value))}
-          className="mt-2 w-full accent-white"
+          className="mt-2 w-full accent-[#7FF2B0]"
         />
       </label>
       <label className="mt-4 flex items-center gap-2 text-xs text-neutral-400">
@@ -113,7 +121,7 @@ function PasswordMaker() {
           type="checkbox"
           checked={symbols}
           onChange={(e) => setSymbols(e.target.checked)}
-          className="h-4 w-4 accent-white"
+          className="h-4 w-4 accent-[#7FF2B0]"
         />
         استخدم رموز خاصة
       </label>

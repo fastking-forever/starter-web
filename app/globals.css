@@ -497,6 +497,52 @@ header.scrolled {
   .gradient-text {
     animation: none;
   }
+
+  .cta-mint,
+  a.nav-active {
+    transition: none;
+  }
+}
+
+/* Stagger cards as they enter */
+article.reveal:nth-child(2) { transition-delay: 70ms; }
+article.reveal:nth-child(3) { transition-delay: 140ms; }
+article.reveal:nth-child(4) { transition-delay: 210ms; }
+article.reveal:nth-child(5) { transition-delay: 280ms; }
+article.reveal:nth-child(6) { transition-delay: 350ms; }
+
+/* Highlight the section currently in view */
+a.nav-active {
+  color: var(--accent) !important;
+  background-color: rgba(127, 242, 176, 0.14) !important;
+  border-color: rgba(127, 242, 176, 0.38) !important;
+  box-shadow: 0 0 16px rgba(127, 242, 176, 0.14);
+}
+
+/* One shared mint action style for in-page tools */
+.cta-mint {
+  background: linear-gradient(135deg, #7FF2B0, #D9FFE9);
+  color: #06100C;
+  box-shadow: 0 0 18px rgba(127, 242, 176, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.cta-mint:hover {
+  filter: brightness(1.07);
+  box-shadow: 0 0 26px rgba(127, 242, 176, 0.38);
+  transform: translateY(-2px);
+}
+
+.cta-mint:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: none;
+}
+
+.cta-mint:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+  transform: none;
+  box-shadow: none;
 }
 
 /* Warm ivory instead of pure white across the UI */

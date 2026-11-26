@@ -119,7 +119,7 @@ export default function ImageStudio() {
       a.href = href;
       a.download = `adam-${seed}.jpg`;
       a.click();
-      URL.revokeObjectURL(href);
+      window.setTimeout(() => URL.revokeObjectURL(href), 1000);
     } catch {
       window.open(image, "_blank", "noopener,noreferrer");
     }
@@ -166,7 +166,7 @@ export default function ImageStudio() {
             <button
               onClick={generate}
               disabled={loading || !prompt.trim()}
-              className="mt-6 w-full rounded-xl bg-white px-5 py-3.5 text-sm font-bold text-black transition hover:bg-neutral-300 disabled:cursor-not-allowed disabled:opacity-40"
+              className="cta-mint mt-6 w-full rounded-xl px-5 py-3.5 text-sm font-bold disabled:cursor-not-allowed"
             >
               {loading ? "جارٍ التوليد..." : "ولّد الصورة ✦"}
             </button>
@@ -194,7 +194,7 @@ export default function ImageStudio() {
               <div className="mt-4 flex flex-wrap gap-2">
                 <button
                   onClick={() => void download()}
-                  className="rounded-lg bg-white px-4 py-2 text-xs font-bold text-black transition hover:bg-neutral-300"
+                  className="cta-mint rounded-lg px-4 py-2 text-xs font-bold"
                 >
                   حمّل الصورة ↓
                 </button>
