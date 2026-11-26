@@ -86,7 +86,7 @@ export default function Home() {
         <div className="mono-grid pointer-events-none absolute inset-0 opacity-60 [mask-image:radial-gradient(circle_at_50%_35%,black,transparent_70%)]" />
 
         <div className="relative z-10 w-full max-w-4xl">
-          <span className="section-tag">◈ Premium Arabic Arcade</span>
+          <span className="section-tag">DEV BY ADAM  ◈</span>
           <h1 className="font-display mt-7 text-5xl font-black leading-[1.1] md:text-7xl">
             أهلًا بك في <span className="gradient-text">ADAM</span>
           </h1>
