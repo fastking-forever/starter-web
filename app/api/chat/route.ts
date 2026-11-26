@@ -3,8 +3,9 @@ import { NextResponse } from "next/server";
 
 const GATEWAY_MODEL = process.env.AI_GATEWAY_MODEL || "openai/gpt-4o-mini";
 
-const SYSTEM_PROMPT = `أنت مساعد عربي مختصر وودود لموقع ADAM.
-الموقع يعرّف بمنصة ADAM ويحتوي على: مساعد ذكي، تجارب تفاعلية (starter-web و REA)، وقسم تنزيلات للألعاب.
+const SYSTEM_PROMPT = `أنت مساعد عربي مختصر وودود لموقع ADAM، موقع ألعاب بالأبيض والأسود.
+الألعاب المتاحة للتحميل: Subway Surfers وADAM Football وADAM Strike (لعبة فضاء بضرب النار) ويومك أهم وADAM Game وGolazo وFootball HTML وADAM City وLight Jockey وIsoCity وChallenge Game وSand Tale.
+فيه أيضاً لعبة فضاء تفاعلية جوه الموقع في قسم «العب من غير تحميل».
 رد بالعربية الفصحى البسيطة، في فقرات قصيرة، وبدون اختراع معلومات غير موجودة.`;
 
 async function gatewayReply(message: string) {

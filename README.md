@@ -1,45 +1,36 @@
-# نَبْض — Starter تعريفي
+# ADAM — موقع ألعاب بالأبيض والأسود
 
-صفحة تعريفية (About / Landing) بالعربية و RTL، ديزاين داكن بـ Tailwind v4،
-وفيها مساعد ذكي جاهز.
+موقع تعريفي لمكتبة ألعاب ADAM: تحميل مباشر، لعبة فضاء تفاعلية جوه المتصفح، ومساعد ذكي بالعربي.
 
-## التشغيل
+## التشغيل محلياً
 
 ```bash
-cd starter-web
 npm install
 npm run dev
 ```
 
 افتح http://localhost:3000
 
-## تفعيل الذكاء الاصطناعي الحقيقي
-
-الافتراضي أن الدردشة في **وضع تجريبي** (بتردد سؤالك). عشان تربط OpenAI:
+## الرفع على Vercel
 
 ```bash
-copy .env.example .env.local
+npm run build
+vercel --prod --yes
 ```
 
-ثم افتح `.env.local` وحط المفتاح:
+الموقع الحي: https://adam-wab.vercel.app
 
-```env
-OPENAI_API_KEY=sk-....
-```
+## المساعد الذكي
 
-السيرفر هيستخدم `gpt-4o-mini` تلقائياً. لو المفتاح مش موجود، هيشتغل الوضع التجريبي من غير أخطاء.
+- على Vercel: بيستخدم OIDC تلقائياً عبر Vercel AI Gateway.
+- محلياً أو مع مفتاح خاص: اضبط `AI_GATEWAY_API_KEY` أو `OPENAI_API_KEY` في `.env.local` (مش مترفوع على GitHub).
+- النموذج الافتراضي: `openai/gpt-4o-mini` ويتغيّر عبر `AI_GATEWAY_MODEL`.
 
-## الملفات المهمة
+## التنزيلات
 
-| الملف | الوظيفة |
-|---|---|
-| `app/page.tsx` | كل أقسام الصفحة |
-| `app/globals.css` | الألوان الأساسية + Tailwind |
-| `components/ai-chat.tsx` | واجهة الدردشة |
-| `app/api/chat/route.ts` | نقطة الـ API (تجريبي / OpenAI) |
+الملفات في `public/downloads/` متاحة للجميع بدون تسجيل:
+APK لأندرويد، ZIP لألعاب المتصفح، وملف HTML واحد.
 
-## تخصيص سريع
+## التصميم
 
-- الاسم والهوية: `app/layout.tsx` و `app/page.tsx`
-- اللون الأساسي: غيّر `--accent` في `app/globals.css` (دلوقتي برتقالي `#ff6a00`)
-- النصوص: عدّل مصفوفة `features` في `app/page.tsx`
+أبيض وأسود فقط. الألوان في `app/globals.css` mono: خلفية `#070707` ونص `#fafafa`.

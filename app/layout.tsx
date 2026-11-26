@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import ScrollProgress from "@/components/scroll-progress";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "ADAM | منصة تعريفية",
-  description: "منصة ADAM: هوية، تجارب تفاعلية، مساعد ذكي، وتنزيلات ألعاب.",
+  title: "ADAM | ألعابك في مكان واحد",
+  description: "موقع ADAM: ألعاب للتنزيل، لعبة فضاء تفاعلية، ومساعد ذكي بالعربي.",
 };
 
 export default function RootLayout({
@@ -11,7 +12,8 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ar" dir="rtl">
-      <body className="min-h-screen bg-[#0a0a0a] text-neutral-100 antialiased">
+      <body className="min-h-screen bg-[#070707] text-neutral-100 antialiased">
+        <ScrollProgress />
         {children}
       </body>
     </html>
