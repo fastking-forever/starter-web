@@ -453,6 +453,41 @@ header.scrolled {
   outline-offset: 3px;
 }
 
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.75s ease,
+    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.reveal-in {
+  opacity: 1;
+  transform: none;
+}
+
+#showcase video {
+  transition: transform 0.5s ease, filter 0.5s ease;
+}
+
+#showcase .relative:hover video {
+  transform: scale(1.025);
+  filter: brightness(1.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  #showcase video {
+    transition: none;
+  }
+}
+
 /* Warm ivory instead of pure white across the UI */
 .text-white {
   color: var(--ink) !important;

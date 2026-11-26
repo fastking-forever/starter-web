@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import InteractionPolish from "@/components/interaction-polish";
 import ScrollProgress from "@/components/scroll-progress";
 import TargetCursor from "@/components/target-cursor";
 import "./globals.css";
@@ -24,6 +25,7 @@ export default function RootLayout({
       <body className="min-h-screen bg-[#06100C] text-neutral-100 antialiased">
         <ScrollProgress />
         <TargetCursor />
+        <InteractionPolish />
         {children}
       </body>
     </html>
