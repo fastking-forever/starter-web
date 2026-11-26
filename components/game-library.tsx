@@ -145,7 +145,7 @@ export default function GameLibrary() {
 
   return (
     <section id="games" className="border-t border-white/10">
-      <div className="mx-auto max-w-6xl px-6 py-24">
+      <div className="mx-auto max-w-6xl px-5 py-16 md:px-6 md:py-24">
         <div className="text-center">
           <span className="section-tag">مكتبة الألعاب</span>
           <h2 className="section-title mt-5">كل ألعاب ADAM</h2>

@@ -378,7 +378,7 @@ function ArabicText() {
 export default function Tools() {
   return (
     <section id="tools" className="border-t border-white/10 bg-white/[0.015]">
-      <div className="mx-auto max-w-6xl px-6 py-24">
+      <div className="mx-auto max-w-6xl px-5 py-16 md:px-6 md:py-24">
         <div className="text-center">
           <span className="section-tag">خدمات ADAM</span>
           <h2 className="section-title mt-5">أدوات جوه الموقع</h2>

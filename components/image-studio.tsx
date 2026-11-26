@@ -130,7 +130,7 @@ export default function ImageStudio() {
 
   return (
     <section id="create" className="border-t border-white/10 bg-white/[0.015]">
-      <div className="mx-auto max-w-6xl px-6 py-24">
+      <div className="mx-auto max-w-6xl px-5 py-16 md:px-6 md:py-24">
         <div className="mb-10 flex flex-wrap items-end justify-between gap-5">
           <div>
             <span className="section-tag">استوديو ADAM</span>

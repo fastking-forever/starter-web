@@ -30,7 +30,7 @@ export default function Faq() {
 
   return (
     <section id="faq" className="border-t border-white/10 bg-white/[0.015]">
-      <div className="mx-auto max-w-4xl px-6 py-24">
+      <div className="mx-auto max-w-4xl px-5 py-16 md:px-6 md:py-24">
         <div className="text-center">
           <span className="section-tag">الأسئلة الشائعة</span>
           <h2 className="section-title mt-5">إجابات سريعة</h2>

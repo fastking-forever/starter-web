@@ -67,12 +67,12 @@ export default function Home() {
       </header>
 
       {/* Mobile navigation */}
-      <nav className="sticky top-16 z-40 flex gap-1 overflow-x-auto border-b border-white/10 bg-[#06100C]/90 px-4 py-2 backdrop-blur-xl lg:hidden">
+      <nav aria-label="روابط سريعة" className="sticky top-16 z-40 grid grid-cols-4 gap-1.5 border-b border-white/10 bg-[#06100C]/90 px-4 py-2 backdrop-blur-xl sm:grid-cols-8 lg:hidden">
         {navLinks.map((link) => (
           <a
             key={link.href}
             href={link.href}
-            className="shrink-0 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[11px] font-bold text-white/70 transition hover:border-white/40 hover:text-white"
+            className="rounded-full border border-white/10 bg-white/[0.04] px-2 py-2 text-center text-[10px] font-bold leading-tight text-white/70 transition hover:border-white/40 hover:text-white sm:text-[11px]"
           >
             {link.label}
           </a>
@@ -80,26 +80,26 @@ export default function Home() {
       </nav>
 
       {/* Hero */}
-      <section id="home" className="relative flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center overflow-hidden px-5 pb-16 pt-28 text-center md:px-8">
+      <section id="home" className="relative flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center overflow-hidden px-5 pb-12 pt-40 text-center sm:pt-32 md:px-8 md:pb-16 md:pt-28">
         <div className="orb orb-one" />
         <div className="orb orb-two" />
         <div className="mono-grid pointer-events-none absolute inset-0 opacity-60 [mask-image:radial-gradient(circle_at_50%_35%,black,transparent_70%)]" />
 
         <div className="relative z-10 w-full max-w-4xl">
           <span className="section-tag">DEV BY ADAM  ◈</span>
-          <h1 className="font-display mt-7 text-5xl font-black leading-[1.1] md:text-7xl">
+          <h1 className="font-display mt-6 text-4xl font-black leading-[1.15] sm:text-5xl md:text-7xl">
             أهلًا بك في <span className="gradient-text">ADAM</span>
           </h1>
-          <p className="mx-auto mt-5 max-w-2xl text-base leading-loose text-white/60 md:text-lg">
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-white/60 sm:text-base sm:leading-loose md:text-lg">
             خمسة ألعاب باسم ADAM، ولعبتين تقدر تلعبهم فوراً في المتصفح،
             واستوديو صور وأدوات ذكية تجربها من غير تسجيل.
           </p>
 
-          <p className="mx-auto mt-7 max-w-2xl rounded-xl border border-[#7FF2B0]/25 bg-[#7FF2B0]/[0.06] px-5 py-4 font-display text-base font-black leading-loose text-white shadow-[0_0_25px_rgba(127,242,176,0.1)] md:text-lg">
+          <p className="mx-auto mt-6 max-w-2xl rounded-xl border border-[#7FF2B0]/25 bg-[#7FF2B0]/[0.06] px-4 py-3.5 font-display text-sm font-black leading-relaxed text-white shadow-[0_0_25px_rgba(127,242,176,0.1)] sm:text-base sm:py-4 sm:leading-loose md:text-lg">
             «من لم يذل  نفسه علي مقاعد العلم , اذلته الحياه علي ابوابها»
           </p>
 
-          <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
+          <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
             <a href="#games" className="btn-primary">
               تصفّح الألعاب <span>↓</span>
             </a>
@@ -108,12 +108,12 @@ export default function Home() {
             </a>
           </div>
 
-          <div className="mx-auto mt-14 grid max-w-2xl gap-3 sm:grid-cols-3">
+          <div className="mx-auto mt-10 grid max-w-2xl grid-cols-3 gap-2 sm:mt-14 sm:gap-3">
             {stats.map((stat) => (
-              <div key={stat.label} className="glass-card rounded-2xl px-4 py-6">
-                <div className="diamond mx-auto mb-4 text-xs text-white">{stat.icon}</div>
-                <p className="font-display text-3xl font-black">{stat.value}</p>
-                <p className="mt-1 font-mono text-[11px] tracking-widest text-white/55">{stat.label}</p>
+              <div key={stat.label} className="glass-card rounded-2xl px-2 py-4 sm:px-4 sm:py-6">
+                <div className="diamond mx-auto mb-2 text-[10px] text-white sm:mb-4 sm:text-xs">{stat.icon}</div>
+                <p className="font-display text-2xl font-black sm:text-3xl">{stat.value}</p>
+                <p className="mt-1 font-mono text-[9px] leading-tight tracking-wide text-white/55 sm:text-[11px] sm:tracking-widest">{stat.label}</p>
               </div>
             ))}
           </div>
@@ -160,7 +160,7 @@ export default function Home() {
       <div className="border-t border-white/10" aria-hidden="true" />
 
       {/* Advantages */}
-      <section id="why" className="mx-auto max-w-6xl px-6 py-24">
+      <section id="why" className="mx-auto max-w-6xl px-5 py-16 md:px-6 md:py-24">
         <div className="text-center">
           <span className="section-tag">ليه ADAM؟</span>
           <h2 className="section-title mt-5">موقع واحد، كل اللعب</h2>
@@ -188,7 +188,7 @@ export default function Home() {
 
       {/* Playable game */}
       <section id="play" className="border-t border-white/10 bg-white/[0.015]">
-        <div className="mx-auto max-w-3xl px-6 py-24">
+        <div className="mx-auto max-w-3xl px-5 py-16 md:px-6 md:py-24">
           <div className="mb-10 text-center">
             <span className="section-tag">تجربة تفاعلية</span>
             <h2 className="section-title mt-5">العب من غير تحميل</h2>
@@ -202,7 +202,7 @@ export default function Home() {
 
       {/* Dinosaur game */}
       <section id="dino" className="border-t border-white/10">
-        <div className="mx-auto max-w-6xl px-6 py-24">
+        <div className="mx-auto max-w-6xl px-5 py-16 md:px-6 md:py-24">
           <div className="mb-10 text-center">
             <span className="section-tag">لعبة تانية</span>
             <h2 className="section-title mt-5">ADAM Dino</h2>
@@ -216,7 +216,7 @@ export default function Home() {
 
       {/* Random wheel */}
       <section id="wheel" className="border-t border-white/10 bg-white/[0.015]">
-        <div className="mx-auto max-w-6xl px-6 py-24">
+        <div className="mx-auto max-w-6xl px-5 py-16 md:px-6 md:py-24">
           <div className="mb-10 text-center">
             <span className="section-tag">اختر بسرعة</span>
             <h2 className="section-title mt-5">عجلة ADAM</h2>
@@ -234,7 +234,7 @@ export default function Home() {
 
       {/* AI */}
       <section id="ai" className="border-t border-white/10">
-        <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-24 md:grid-cols-2">
+        <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 py-16 md:px-6 md:py-24 md:grid-cols-2">
           <div>
             <span className="section-tag">المساعد الذكي</span>
             <h2 className="section-title mt-5">اسأل، والباقي علينا</h2>
@@ -254,7 +254,7 @@ export default function Home() {
 
       {/* Contact */}
       <section id="contact" className="border-t border-white/10 bg-white/[0.015]">
-        <div className="mx-auto max-w-6xl px-6 py-24">
+        <div className="mx-auto max-w-6xl px-5 py-16 md:px-6 md:py-24">
           <div className="mb-10 text-center">
             <span className="section-tag">تواصل معانا</span>
             <h2 className="section-title mt-5">مين ورا ADAM؟</h2>
