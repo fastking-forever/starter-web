@@ -67,8 +67,16 @@ async function pollinationsReply(message: string) {
   return data.choices?.[0]?.message?.content?.trim() || "ما جاليش رد واضح، حاول تاني.";
 }
 
-function localReply(message: string) {
+// Reliable answers for the questions people ask most, so the assistant never
+// falls back to a generic line about service limits.
+function quickReply(message: string): string | null {
   const q = message.toLowerCase();
+  if (q.includes("عامل ايه") || q.includes("ازيك") || q.includes("إزايك") || q.includes("مرحبا") || q.includes("اهلا") || q.includes("أهلاً") || q.includes("السلام") || q.includes("هاي") || q.includes("hello") || q.includes("hi")) {
+    return "أهلاً بك! أنا مساعد ADAM. اسألني عن الألعاب أو التحميل وأساعدك فوراً.";
+  }
+  if (q.includes("مين صنعك") || q.includes("مين عملك") || q.includes("انت مين") || q.includes("أنت مين") || q.includes("من انت") || q.includes("who are you")) {
+    return "أنا مساعد ADAM، صمّمني ADAM عشان أساعدك في التحميل واللعب جوه الموقع.";
+  }
   if (q.includes("سبواي") || q.includes("subway")) {
     return "Subway by adam متاحة للتحميل من قسم الألعاب. اضغط «حمّل» وثبّت الملف على جوالك.";
   }
@@ -78,10 +86,23 @@ function localReply(message: string) {
   if (q.includes("نار") || q.includes("فضاء") || q.includes("استر")) {
     return "ADAM Strike هي لعبة الفضاء اللي بتضرب نار. تقدر تلعبها جوه الموقع من غير تحميل.";
   }
-  if (q.includes("ايميل") || q.includes("رقم") || q.includes("تواصل")) {
+  if (q.includes("ديناصور") || q.includes("دينو") || q.includes("dino")) {
+    return "ADAM Dino شغالة جوه الموقع من غير تحميل. اضغط مسافة أو المس الشاشة عشان تقفز.";
+  }
+  if (q.includes("صورة") || q.includes("استوديو")) {
+    return "من قسم «استوديو الصور» اكتب وصف الصورة بالعربي واضغط «ولّد الصورة».";
+  }
+  if (q.includes("عجلة")) {
+    return "قسم «عجلة ADAM» دوّر العجلة وهتختار لك لعبة من الخمسة.";
+  }
+  if (q.includes("ايميل") || q.includes("رقم") || q.includes("تواصل") || q.includes("بريد")) {
     return "تواصل مع ADAM على adamehab828@gmail.com أو 01069607847.";
   }
-  return `وصلني سؤالك: «${message}». المساعد مشغول دلوقتي بسبب حد الخدمة المجانية، حاول تاني بعد دقيقة.`;
+  return null;
+}
+
+function localReply(message: string) {
+  return quickReply(message) ?? "ما لقيتش إجابة واضحة لسؤالك دلوقتي. اسألني عن الألعاب أو التحميل أو التواصل، وأساعدك فوراً.";
 }
 
 export async function POST(request: Request) {
@@ -91,6 +112,9 @@ export async function POST(request: Request) {
   if (!message) {
     return NextResponse.json({ reply: "اكتب سؤال أولاً 🙂" });
   }
+
+  const instant = quickReply(message);
+  if (instant) return NextResponse.json({ reply: instant, instant: true });
 
   const openaiKey = process.env.OPENAI_API_KEY;
   const gatewayKey = process.env.AI_GATEWAY_API_KEY;

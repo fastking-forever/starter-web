@@ -75,7 +75,7 @@ export default function ImageStudio() {
       const img = new window.Image();
       img.onload = () => succeed(directUrl);
       img.onerror = () => {
-        setError("الصورة لسه مش جاهزة — الخدمة المجانية بتسمح بصورة كل 45 ثانية. جرّب تاني بعد شوية.");
+        setError("الصورة لسه مش جاهزة — جرّب تاني بعد شوية.");
         setLoading(false);
       };
       img.src = directUrl;
@@ -87,7 +87,7 @@ export default function ImageStudio() {
         if (res.status === 429) {
           const data = (await res.json().catch(() => ({}))) as { retryAfter?: number };
           const wait = Math.max(1, Math.min(120, Number(data.retryAfter) || 45));
-          setError(`الخدمة وصلت للحد المجاني — هحاول تاني تلقائياً بعد ${wait} ثانية.`);
+          setError(`الخدمة مش جاهزة دلوقتي — هحاول تاني تلقائياً بعد ${wait} ثانية.`);
           if (retryRef.current) window.clearTimeout(retryRef.current);
           retryRef.current = window.setTimeout(() => {
             retryRef.current = null;
@@ -171,7 +171,7 @@ export default function ImageStudio() {
               {loading ? "جارٍ التوليد..." : "ولّد الصورة ✦"}
             </button>
             <p className="mt-3 text-center text-[11px] text-neutral-600">
-              مجاني بدون تسجيل · صورة واحدة كل 45 ثانية تقريباً · البذرة {seed}
+              بدون تسجيل · صورة واحدة كل 45 ثانية تقريباً · البذرة {seed}
             </p>
             {error && <p className="mt-3 text-xs leading-relaxed text-neutral-300">{error}</p>}
           </div>
