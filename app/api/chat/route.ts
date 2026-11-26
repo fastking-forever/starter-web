@@ -77,6 +77,9 @@ function quickReply(message: string): string | null {
   if (q.includes("مين صنعك") || q.includes("مين عملك") || q.includes("انت مين") || q.includes("أنت مين") || q.includes("من انت") || q.includes("who are you")) {
     return "أنا مساعد ADAM، صمّمني ADAM عشان أساعدك في التحميل واللعب جوه الموقع.";
   }
+  if (q.includes("ادم فين") || q.includes("فين ادم") || q.includes("اين ادم") || q.includes("فين adam") || q.includes("where is adam")) {
+    return "ادم في الدرس";
+  }
   if (q.includes("سبواي") || q.includes("subway")) {
     return "Subway by adam متاحة للتحميل من قسم الألعاب. اضغط «حمّل» وثبّت الملف على جوالك.";
   }
