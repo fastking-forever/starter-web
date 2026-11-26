@@ -29,9 +29,9 @@ vercel --prod --yes
 
 ## التنزيلات
 
-الملفات في `public/downloads/` متاحة للجميع بدون تسجيل:
-APK لأندرويد، ZIP لألعاب المتصفح، وملف HTML واحد.
+الملفات في `public/downloads/` متاحة للجميع بدون تسجيل، وعددها بالظبط 5 ملفات APK:
+Subway by adam، ADAM Football، ADAM Strike، يومك أهم (تودو ومنبّهات)، وADAM Game (Neon Breaker).
 
 ## التصميم
 
-أبيض وأسود فقط. الألوان في `app/globals.css` mono: خلفية `#070707` ونص `#fafafa`.
+أخضر نعناعي على خلفية صنوبرية داكنة. الألوان في `app/globals.css`: نعناع `#7FF2B0` على `#06100C` مع لمسات `#F2F7F3`.

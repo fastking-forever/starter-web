@@ -3,9 +3,9 @@ import { NextResponse } from "next/server";
 
 const GATEWAY_MODEL = process.env.AI_GATEWAY_MODEL || "openai/gpt-4o-mini";
 
-const SYSTEM_PROMPT = `أنت مساعد عربي مختصر وودود لموقع ADAM، موقع ألعاب بالأبيض والأسود.
+const SYSTEM_PROMPT = `أنت مساعد عربي مختصر وودود لموقع ADAM، موقع ألعاب بتصميم نعناعي على خلفية صنوبرية داكنة.
 الحقائق الوحيدة المتاحة لك:
-- الألعاب المتاحة للتحميل فقط: Subway by adam، ADAM Football، ADAM Strike (لعبة فضاء بضرب النار)، يومك أهم، ADAM Game.
+- الملفات المتاحة للتحميل فقط: Subway by adam (جري ومراوغة في زيورخ)، ADAM Football (ماتش كرة قدم)، ADAM Strike (فضاء وضرب نار)، يومك أهم (تو دو ليست بالمنبهات والإشعارات)، ADAM Game (Neon Breaker لكسر الطوب).
 - كل التحميلات مجانية وبدون تسجيل من قسم «الألعاب».
 - ADAM Strike ولعبة الديناصور (ADAM Dino) متاحتين في المتصفح من غير تحميل.
 - خدمات جوه الموقع: حاسبة، مولّد كلمة مرور، مؤقت، مولّد QR، وأدوات تنظيف النص العربي في قسم «خدمات ADAM».
@@ -91,6 +91,15 @@ function quickReply(message: string): string | null {
   }
   if (q.includes("ديناصور") || q.includes("دينو") || q.includes("dino")) {
     return "ADAM Dino شغالة جوه الموقع من غير تحميل. اضغط مسافة أو المس الشاشة عشان تقفز.";
+  }
+  if (q.includes("نيون") || q.includes("بريكر") || q.includes("طوب") || q.includes("adam game")) {
+    return "ADAM Game هي Neon Breaker: اكسر الطوب واصطد القوى الخارقة. حمّلها من قسم الألعاب.";
+  }
+  if (q.includes("وقتك") || q.includes("تودو") || q.includes("منبه") || q.includes("مهمات") || q.includes("مهام")) {
+    return "يومك أهم هي تو دو ليست بالمنبهات والإشعارات من ADAM. تقدر تحمّلها من قسم الألعاب.";
+  }
+  if (q.includes("زيورخ") || q.includes("surfers")) {
+    return "Subway by adam هي نسخة ADAM من Subway Surfers في زيورخ: جري ومراوغة وقطار.";
   }
   if (q.includes("صورة") || q.includes("استوديو")) {
     return "من قسم «استوديو الصور» اكتب وصف الصورة بالعربي واضغط «ولّد الصورة».";

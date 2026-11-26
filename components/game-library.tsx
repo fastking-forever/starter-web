@@ -1,23 +1,71 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 type Game = {
   name: string;
   desc: string;
   file: string;
   size: string;
-  category: "android" | "browser" | "football" | "space";
+  category: "android" | "football" | "space" | "utility";
   tag: string;
   glyph: string;
+  keywords: string;
 };
 
+// Titles stay exactly as requested; descriptions reflect what is really inside
+// each APK (verified from the packaged app metadata and assets).
 const games: Game[] = [
-  { name: "Subway by adam", desc: "جري ومراوغة في الشارع — نسخة ADAM (سبواي)", file: "subway-by-adam.apk", size: "3.6 MB", category: "android", tag: "أندرويد", glyph: "⤴" },
-  { name: "ADAM Football", desc: "كرة قدم على الجوال (كوره)", file: "adam-football.apk", size: "3 MB", category: "football", tag: "أندرويد · كرة", glyph: "◉" },
-  { name: "ADAM Strike", desc: "لعبة فضائية بضرب النار (استريك · نت في الفضاء)", file: "adam-strike.apk", size: "3.9 MB", category: "space", tag: "أندرويد · فضاء", glyph: "✦" },
-  { name: "يومك أهم", desc: "لعبة اليوم والوقت", file: "waqtak-aham.apk", size: "2.6 MB", category: "android", tag: "أندرويد", glyph: "◷" },
-  { name: "ADAM Game", desc: "أول لعبة في السلسلة (اول واحده)", file: "adam-game.apk", size: "4 MB", category: "android", tag: "أندرويد", glyph: "◆" },
+  {
+    name: "Subway by adam",
+    desc: "جري ومراوغة في زيورخ — نسخة ADAM من Subway Surfers",
+    file: "subway-by-adam.apk",
+    size: "3.75 MB",
+    category: "android",
+    tag: "أندرويد · جري",
+    glyph: "⤴",
+    keywords: "subway surfers zurich سبواي زيورخ جري مراوغة قطار",
+  },
+  {
+    name: "ADAM Football",
+    desc: "ماتش كرة قدم سريع على الجوال — إيطاليا ضد فرنسا",
+    file: "adam-football.apk",
+    size: "3.18 MB",
+    category: "football",
+    tag: "أندرويد · كرة",
+    glyph: "◉",
+    keywords: "football كورة كرة قدم ماتش ايطاليا فرنسا هدف حارس",
+  },
+  {
+    name: "ADAM Strike",
+    desc: "فضاء وضرب نار مع موجات وزعماء — نسخة ADAM",
+    file: "adam-strike.apk",
+    size: "4.05 MB",
+    category: "space",
+    tag: "أندرويد · فضاء",
+    glyph: "✦",
+    keywords: "strike استريك فضاء ضرب نار موجات بوس shield dash نت في الفضاء",
+  },
+  {
+    name: "يومك أهم",
+    desc: "تو دو ليست بالمنبهات والإشعارات — من تنظيم ADAM",
+    file: "waqtak-aham.apk",
+    size: "2.75 MB",
+    category: "utility",
+    tag: "أندرويد · تنظيم",
+    glyph: "◷",
+    keywords: "وقتك اهم تودو ليست منبه تنبيهات إشعارات وقت يوممهام",
+  },
+  {
+    name: "ADAM Game",
+    desc: "Neon Breaker — اكسر الطوب واصطد القوى الخارقة",
+    file: "adam-game.apk",
+    size: "4.24 MB",
+    category: "android",
+    tag: "أندرويد · كلاسيك",
+    glyph: "◆",
+    keywords: "adam game نيون بريكر برك اكسر الطوب كرة مضرب powers",
+  },
 ];
 
 const filters = [
@@ -25,27 +73,52 @@ const filters = [
   { id: "android", label: "أندرويد" },
   { id: "football", label: "كرة القدم" },
   { id: "space", label: "فضاء وأكشن" },
+  { id: "utility", label: "تنظيم" },
 ] as const;
+
+const normalize = (text: string) =>
+  text
+    .toLowerCase()
+    .replace(/[\u064B-\u065F]/g, "")
+    .replace(/[أإآ]/g, "ا")
+    .replace(/ة/g, "ه")
+    .replace(/ى/g, "ي");
 
 export default function GameLibrary() {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<(typeof filters)[number]["id"]>("all");
   const [copied, setCopied] = useState<string | null>(null);
+  const [copyMessage, setCopyMessage] = useState("");
+  const copyTimer = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimer.current) window.clearTimeout(copyTimer.current);
+    };
+  }, []);
 
   const visible = useMemo(() => {
-    const q = query.trim().toLowerCase();
+    const q = normalize(query.trim());
     return games.filter(
       (g) =>
         (filter === "all" || g.category === filter) &&
-        (!q || `${g.name} ${g.desc} ${g.tag}`.toLowerCase().includes(q)),
+        (!q || normalize(`${g.name} ${g.desc} ${g.tag} ${g.keywords}`).includes(q)),
     );
   }, [query, filter]);
 
-  async function copyLink(file: string) {
-    const link = `${window.location.origin}/downloads/${file}`;
+  const resetSearch = () => {
+    setQuery("");
+    setFilter("all");
+  };
+
+  async function copyLink(game: Game) {
+    const link = `${window.location.origin}/downloads/${game.file}`;
     try {
       await navigator.clipboard.writeText(link);
     } catch {
+      const active = document.activeElement as HTMLElement | null;
+      const selection = window.getSelection();
+      const range = selection?.rangeCount ? selection.getRangeAt(0).cloneRange() : null;
       const field = document.createElement("textarea");
       field.value = link;
       field.style.position = "fixed";
@@ -54,9 +127,19 @@ export default function GameLibrary() {
       field.select();
       document.execCommand("copy");
       field.remove();
+      active?.focus();
+      if (range && selection) {
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
     }
-    setCopied(file);
-    window.setTimeout(() => setCopied(null), 1800);
+    setCopied(game.file);
+    setCopyMessage(`تم نسخ رابط ${game.name}`);
+    if (copyTimer.current) window.clearTimeout(copyTimer.current);
+    copyTimer.current = window.setTimeout(() => {
+      setCopied(null);
+      setCopyMessage("");
+    }, 1800);
   }
 
   return (
@@ -68,32 +151,57 @@ export default function GameLibrary() {
           <p className="section-desc mx-auto mt-3 max-w-xl">
             ابحث، صفّي، ونزّل مباشرة. بدون تسجيل وبدون انتظار.
           </p>
-          <div className="mt-5 inline-flex rounded-full border border-white/15 px-5 py-2 text-sm text-white/60">
+          <div
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+            className="mt-5 inline-flex rounded-full border border-white/15 px-5 py-2 text-sm text-white/60"
+          >
             <span className="font-bold text-white">{visible.length}</span>&nbsp; لعبة متاحة
           </div>
         </div>
 
         <div className="mt-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div className="relative w-full md:max-w-sm">
-            <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-neutral-600">⌕</span>
+            <span aria-hidden="true" className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-neutral-400">⌕</span>
             <input
+              type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") e.currentTarget.blur();
+              }}
+              enterKeyHint="search"
               aria-label="ابحث عن لعبة"
+              aria-describedby="games-search-hint"
               placeholder="ابحث عن لعبة..."
-              className="w-full rounded-xl border border-white/15 bg-white/[0.03] px-4 py-3 pr-10 text-sm outline-none transition placeholder:text-neutral-600 focus:border-white/50"
+              className="w-full rounded-xl border border-white/15 bg-white/[0.03] px-4 py-3 pr-11 text-sm outline-none transition placeholder:text-neutral-400 focus:border-[#7FF2B0]/60"
             />
+            <span id="games-search-hint" className="sr-only">
+              يمكنك البحث باسم اللعبة أو بنوعها أو بكلمات مثل سبواي ونيون بريكر.
+            </span>
+            {query && (
+              <button
+                type="button"
+                onClick={() => setQuery("")}
+                aria-label="مسح البحث"
+                className="absolute left-3 top-1/2 grid h-7 w-7 -translate-y-1/2 place-items-center rounded-full text-neutral-400 transition hover:bg-white/10 hover:text-white"
+              >
+                ×
+              </button>
+            )}
           </div>
-          <div className="flex flex-wrap gap-2">
+          <div role="group" aria-label="تصفية الألعاب" className="flex flex-wrap gap-2">
             {filters.map((f) => (
               <button
                 key={f.id}
+                type="button"
                 onClick={() => setFilter(f.id)}
                 aria-pressed={filter === f.id}
-                className={`rounded-full border px-4 py-2 text-xs font-bold transition ${
+                className={`rounded-full border px-4 py-2.5 text-xs font-bold transition ${
                   filter === f.id
-                    ? "border-white bg-white text-black"
-                    : "border-white/15 text-neutral-400 hover:border-white/50 hover:text-white"
+                    ? "border-[#7FF2B0] bg-[#7FF2B0] text-[#06100C]"
+                    : "border-white/15 text-neutral-300 hover:border-[#7FF2B0]/50 hover:text-white"
                 }`}
               >
                 {f.label}
@@ -107,31 +215,33 @@ export default function GameLibrary() {
             {visible.map((g) => (
               <article
                 key={g.file}
-                className="group rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition hover:-translate-y-1 hover:border-white/40 hover:bg-white/[0.06]"
+                className="group rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition hover:-translate-y-1 hover:border-[#7FF2B0]/50 hover:bg-white/[0.06]"
               >
-                <div className="flex items-start justify-between">
-                  <span className="grid h-11 w-11 place-items-center rounded-xl border border-white/15 text-xl text-neutral-300 transition group-hover:border-white/50 group-hover:text-white">
+                <div className="flex items-start justify-between gap-2">
+                  <span aria-hidden="true" className="grid h-11 w-11 place-items-center rounded-xl border border-white/15 text-xl text-[#7FF2B0] transition group-hover:border-[#7FF2B0]/50">
                     {g.glyph}
                   </span>
-                  <span className="rounded-full border border-white/10 px-2.5 py-1 text-[10px] text-neutral-500">{g.tag}</span>
+                  <span className="rounded-full border border-white/10 px-2.5 py-1 text-[10px] text-neutral-400">{g.tag}</span>
                 </div>
                 <h3 className="mt-5 text-lg font-bold">{g.name}</h3>
-                <p className="mt-1.5 text-xs text-neutral-500">{g.desc}</p>
-                <div className="mt-6 flex items-center justify-between border-t border-white/10 pt-4">
-                  <span className="text-xs text-neutral-600">{g.size}</span>
+                <p className="mt-1.5 text-xs leading-relaxed text-neutral-300">{g.desc}</p>
+                <div className="mt-6 flex items-center justify-between gap-2 border-t border-white/10 pt-4">
+                  <span dir="ltr" lang="en" className="text-xs text-neutral-400">{g.size}</span>
                   <div className="flex items-center gap-2">
                     <button
-                      onClick={() => void copyLink(g.file)}
-                      title="نسخ رابط التحميل"
-                      aria-label="نسخ رابط التحميل"
-                      className="grid h-8 w-8 place-items-center rounded-lg border border-white/10 text-xs text-neutral-500 transition hover:border-white/40 hover:text-white"
+                      type="button"
+                      onClick={() => void copyLink(g)}
+                      title={copied === g.file ? `تم نسخ رابط ${g.name}` : `نسخ رابط تحميل ${g.name}`}
+                      aria-label={copied === g.file ? `تم نسخ رابط ${g.name}` : `نسخ رابط تحميل ${g.name}`}
+                      className="grid h-11 w-11 place-items-center rounded-lg border border-white/10 text-xs text-neutral-300 transition hover:border-[#7FF2B0]/50 hover:text-[#7FF2B0]"
                     >
-                      {copied === g.file ? "✓" : "⧉"}
+                      <span aria-hidden="true">{copied === g.file ? "✓" : "⧉"}</span>
                     </button>
                     <a
                       href={`/downloads/${g.file}`}
-                      download
-                      className="cta-mint rounded-lg px-4 py-2 text-xs font-bold"
+                      download={g.file}
+                      aria-label={`تحميل ${g.name} — ملف APK بحجم ${g.size}`}
+                      className="cta-mint inline-flex min-h-11 items-center rounded-lg px-5 py-2.5 text-xs font-bold"
                     >
                       تحميل ↓
                     </a>
@@ -141,10 +251,14 @@ export default function GameLibrary() {
             ))}
           </div>
         ) : (
-          <div className="mt-9 rounded-2xl border border-dashed border-white/15 p-14 text-center text-neutral-500">
-            مفيش لعبة بالاسم ده. جرّب كلمة تانية.
+          <div role="status" className="mt-9 rounded-2xl border border-dashed border-white/15 p-14 text-center text-neutral-300">
+            <p>مفيش لعبة مطابقة للبحث أو التصفية الحالية.</p>
+            <button type="button" onClick={resetSearch} className="cta-mint mt-5 rounded-lg px-5 py-2.5 text-xs font-bold">
+              عرض كل الألعاب ↺
+            </button>
           </div>
         )}
+        <p role="status" aria-live="polite" className="sr-only">{copyMessage}</p>
       </div>
     </section>
   );

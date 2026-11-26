@@ -484,6 +484,16 @@ header.scrolled {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  #games article,
+  #games article * {
+    transition: none !important;
+    transform: none !important;
+  }
+
   .reveal {
     opacity: 1;
     transform: none;

@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 
 const HOVER_SELECTOR =
-  "a, button, article, p, h1, h2, h3, h4, h5, h6, li, blockquote, strong, b, small, label, summary, [data-hover]";
+  "a, button, article, p, h1, h2, h3, h4, h5, h6, li, blockquote, strong, b, small, label, summary, canvas, [data-hover]";
 
 export default function TargetCursor() {
   const wrapperRef = useRef<HTMLDivElement>(null);

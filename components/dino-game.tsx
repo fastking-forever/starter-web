@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import SoundToggle from "@/components/sound-toggle";
+import { playSound } from "@/lib/game-audio";
 
 const W = 800;
 const H = 240;
@@ -10,7 +12,7 @@ const DINO_W = 26;
 const DINO_H = 30;
 const BEST_KEY = "adam-dino-best";
 
-type Obstacle = { x: number; w: number; h: number; tall: boolean };
+type Obstacle = { x: number; w: number; h: number };
 type Particle = { x: number; y: number; vx: number; vy: number; life: number; color: string };
 
 export default function DinoGame() {
@@ -27,8 +29,10 @@ export default function DinoGame() {
     const ctx = canvas?.getContext("2d");
     if (!canvas || !ctx) return;
 
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let raf = 0;
     let last = performance.now();
+    let visible = true;
     let y = 0;
     let vy = 0;
     let obstacles: Obstacle[] = [];
@@ -59,6 +63,7 @@ export default function DinoGame() {
     }));
 
     const burst = (x: number, atY: number, color: string, count: number) => {
+      if (reduced) return;
       for (let i = 0; i < count; i += 1) {
         particles.push({
           x,
@@ -90,7 +95,10 @@ export default function DinoGame() {
     };
 
     const jump = () => {
-      if (dead) reset();
+      if (dead) {
+        reset();
+        playSound("start");
+      }
       if (!running) {
         running = true;
         setStarted(true);
@@ -99,22 +107,40 @@ export default function DinoGame() {
       if (y === 0 && vy === 0) {
         vy = 9.4;
         burst(DINO_X + 10, GROUND - 2, "#7FF2B0", 6);
+        playSound("jump");
       }
     };
     jumpRef.current = jump;
 
+    // Keys are captured only while the game canvas itself has focus, so Space
+    // and arrows keep working normally for buttons and page scrolling.
     const onKeyDown = (e: KeyboardEvent) => {
-      if ((e.target as HTMLElement | null)?.closest("input, textarea, select, [contenteditable='true']")) return;
+      if (e.repeat || e.metaKey || e.ctrlKey || e.altKey) return;
       if (e.key === " " || e.key === "ArrowUp") {
         e.preventDefault();
         jump();
       }
     };
-    window.addEventListener("keydown", onKeyDown);
+    canvas.addEventListener("keydown", onKeyDown);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting;
+        last = performance.now();
+      },
+      { threshold: 0 },
+    );
+    observer.observe(canvas);
+    const onVisibility = () => { last = performance.now(); };
+    document.addEventListener("visibilitychange", onVisibility);
 
     const loop = (now: number) => {
       const dt = Math.min((now - last) / 16.67, 2);
       last = now;
+      if (!visible || document.hidden) {
+        raf = requestAnimationFrame(loop);
+        return;
+      }
 
       if (running && !dead) {
         if (y > 0 || vy > 0) {
@@ -127,48 +153,50 @@ export default function DinoGame() {
         }
         distance += speed * dt;
         value += 0.08 * dt;
-        speed = 5 + Math.floor(value / 25) * 0.45;
+        // Cap difficulty so obstacles can never tunnel through the dino.
+        speed = Math.min(11, 5 + Math.floor(value / 25) * 0.45);
 
         if (distance > nextGap) {
-          const tall = Math.random() < 0.3;
           obstacles.push({
             x: W + 20,
-            w: tall ? 12 : 14 + Math.random() * 8,
-            h: tall ? 34 + Math.random() * 10 : 22 + Math.random() * 12,
-            tall,
+            w: 14 + Math.random() * 8,
+            h: 22 + Math.random() * 14,
           });
           distance = 0;
           nextGap = 250 + Math.random() * 200;
         }
 
-        for (const o of obstacles) o.x -= speed * dt;
-        obstacles = obstacles.filter((o) => o.x + o.w > -10);
-
         for (const o of obstacles) {
-          if (o.x < DINO_X + DINO_W && o.x + o.w > DINO_X && y < o.h) {
+          const previousX = o.x;
+          o.x -= speed * dt;
+          const crossed = o.x < DINO_X + DINO_W && previousX + o.w > DINO_X;
+          if (crossed && y < o.h) {
             dead = true;
             running = false;
-            shake = 8;
+            if (!reduced) shake = 8;
             flash = 1;
             burst(DINO_X + 16, GROUND - 16, "#F2F7F3", 16);
+            playSound("over");
+            try {
+              window.localStorage.setItem(BEST_KEY, String(bestLocal));
+            } catch {
+              // Storage may be disabled.
+            }
             setOver(true);
             break;
           }
         }
+        obstacles = obstacles.filter((o) => o.x + o.w > -10);
 
         const current = Math.floor(value);
         if (current !== shown) {
           shown = current;
           setScore(current);
+          if (current > 0 && current % 10 === 0) playSound("score");
           if (current > bestLocal) {
             bestLocal = current;
             setBest(current);
             setNewBest(true);
-            try {
-              window.localStorage.setItem(BEST_KEY, String(current));
-            } catch {
-              // Storage may be disabled.
-            }
           }
         }
       }
@@ -186,19 +214,19 @@ export default function DinoGame() {
       ctx.save();
       if (shake > 0) ctx.translate((Math.random() - 0.5) * shake, (Math.random() - 0.5) * shake);
 
-      // Deep pine sky with slow mint stars.
       ctx.fillStyle = "#06100C";
       ctx.fillRect(-12, -12, W + 24, H + 24);
       for (const s of stars) {
-        s.x -= s.speed * dt;
-        if (s.x < -2) s.x = W + 2;
+        if (!reduced) {
+          s.x -= s.speed * dt;
+          if (s.x < -2) s.x = W + 2;
+        }
         ctx.fillStyle = `rgba(127,242,176,${0.12 + s.r * 0.08})`;
         ctx.fillRect(s.x, s.y, s.r, s.r);
       }
 
-      // Parallax hills.
       ctx.fillStyle = "rgba(127,242,176,0.045)";
-      const hillOffset = (distance * 0.15) % 160;
+      const hillOffset = reduced ? 0 : (distance * 0.15) % 160;
       for (let x = -160; x < W + 160; x += 160) {
         ctx.beginPath();
         ctx.moveTo(x + hillOffset, GROUND);
@@ -208,15 +236,14 @@ export default function DinoGame() {
         ctx.fill();
       }
 
-      // Ground.
       ctx.fillStyle = "rgba(127,242,176,0.45)";
       ctx.fillRect(0, GROUND, W, 2);
       ctx.fillStyle = "rgba(242,247,243,0.26)";
+      const dashOffset = reduced ? 0 : (distance * 2) % 28;
       for (let x = 0; x < W; x += 28) {
-        ctx.fillRect(x - ((distance * 2) % 28), GROUND + 8, 14, 2);
+        ctx.fillRect(x - dashOffset, GROUND + 8, 14, 2);
       }
 
-      // Cacti.
       for (const o of obstacles) {
         ctx.fillStyle = dead ? "rgba(242,247,243,0.55)" : "#F2F7F3";
         ctx.fillRect(o.x, GROUND - o.h, o.w, o.h);
@@ -226,7 +253,6 @@ export default function DinoGame() {
         ctx.fillRect(o.x, GROUND - o.h, o.w, 2);
       }
 
-      // Jump and impact particles.
       for (const p of particles) {
         ctx.globalAlpha = Math.max(0, Math.min(1, p.life));
         ctx.fillStyle = p.color;
@@ -234,9 +260,8 @@ export default function DinoGame() {
       }
       ctx.globalAlpha = 1;
 
-      // Dinosaur.
       const top = GROUND - y - DINO_H;
-      const stride = running && y === 0 && Math.floor(value * 6) % 2 === 0;
+      const stride = running && y === 0 && !reduced && Math.floor(value * 6) % 2 === 0;
       ctx.fillStyle = "#F2F7F3";
       ctx.fillRect(DINO_X, top + 8, 22, 22);
       ctx.fillRect(DINO_X + 15, top, 15, 14);
@@ -258,7 +283,6 @@ export default function DinoGame() {
       ctx.fillStyle = "#7FF2B0";
       ctx.fillRect(DINO_X, top + 8, 22, 2);
 
-      // Score.
       ctx.fillStyle = "#7FF2B0";
       ctx.font = "bold 18px monospace";
       ctx.textAlign = "left";
@@ -280,29 +304,44 @@ export default function DinoGame() {
 
     return () => {
       cancelAnimationFrame(raf);
-      window.removeEventListener("keydown", onKeyDown);
+      canvas.removeEventListener("keydown", onKeyDown);
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
     };
   }, []);
 
   return (
     <div className="mx-auto w-full max-w-3xl rounded-2xl border border-white/15 bg-black p-4">
-      <div className="mb-3 flex items-center justify-between text-xs text-neutral-500">
+      <div className="mb-3 flex flex-wrap items-center justify-between gap-2 text-xs text-neutral-500">
         <span>ADAM DINO — مسافة / ↑ / المس الشاشة</span>
-        <span dir="ltr">BEST {String(best).padStart(4, "0")}</span>
+        <span className="flex items-center gap-2">
+          <span dir="ltr" lang="en">BEST {String(best).padStart(4, "0")}</span>
+          <SoundToggle />
+        </span>
       </div>
       <div className="relative overflow-hidden rounded-xl border border-white/10">
         <canvas
           ref={canvasRef}
           width={W}
           height={H}
-          onClick={() => jumpRef.current()}
-          aria-label="لعبة الديناصور"
-          className="block w-full cursor-pointer touch-none"
-        />
+          tabIndex={0}
+          role="application"
+          aria-label="لعبة الديناصور. اضغط مسافة أو السهم لأعلى أو المس الشاشة للقفز فوق الصبار."
+          onPointerDown={() => {
+            canvasRef.current?.focus();
+            jumpRef.current();
+          }}
+          className={`block w-full cursor-pointer ${started && !over ? "touch-none" : "touch-pan-y"}`}
+        >
+          لعبة الديناصور — اضغط مسافة للقفز.
+        </canvas>
         {(!started || over) && (
           <div className="absolute inset-0 grid place-items-center bg-black/65 backdrop-blur-sm">
             <button
-              onClick={() => jumpRef.current()}
+              onClick={() => {
+                canvasRef.current?.focus();
+                jumpRef.current();
+              }}
               className="cta-mint rounded-xl px-6 py-3 text-sm font-bold"
             >
               {over ? `انتهت اللعبة — النقاط ${score} — العب تاني ↻` : "ابدأ اللعب ↑"}
@@ -310,7 +349,7 @@ export default function DinoGame() {
           </div>
         )}
       </div>
-      <p className="mt-3 text-center text-xs text-neutral-500">
+      <p aria-live="polite" className="mt-3 text-center text-xs text-neutral-500">
         النقاط: {score} · أفضل نتيجة محفوظة: {best} · قفّز فوق الصبار
       </p>
     </div>
