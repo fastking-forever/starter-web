@@ -1,5 +1,18 @@
 import AiChat from "@/components/ai-chat";
 
+const projects = [
+  {
+    name: "starter-web",
+    desc: "الموقع اللي انت بتشوفه دلوقتي — Next.js + Tailwind + مساعد ذكي.",
+    url: "https://github.com/fastking-forever/starter-web",
+  },
+  {
+    name: "rea",
+    desc: "أداة الهندسة العكسية مفتوحة المصدر — Reverse Engineer Anything.",
+    url: "https://github.com/fastking-forever/rea",
+  },
+];
+
 const features = [
   {
     title: "هوية واضحة",
@@ -32,6 +45,7 @@ export default function Home() {
         <nav className="hidden items-center gap-8 text-sm text-neutral-400 md:flex">
           <a href="#about" className="transition hover:text-white">عن المنصة</a>
           <a href="#features" className="transition hover:text-white">المزايا</a>
+          <a href="#projects" className="transition hover:text-white">المشاريع</a>
           <a href="#ai" className="transition hover:text-white">المساعد الذكي</a>
         </nav>
         <a
@@ -149,6 +163,33 @@ export default function Home() {
               <p className="mt-3 text-sm leading-relaxed text-neutral-400">{f.body}</p>
             </article>
           ))}
+        </div>
+      </section>
+
+      {/* Projects */}
+      <section id="projects" className="border-t border-white/10 bg-white/[0.02]">
+        <div className="mx-auto max-w-6xl px-6 py-24">
+          <p className="text-xs font-bold tracking-widest text-[#ff6a00]">مشاريع على GitHub</p>
+          <h2 className="mt-4 text-3xl font-black md:text-4xl">اتنين شغالين</h2>
+          <div className="mt-12 grid gap-5 md:grid-cols-2">
+            {projects.map((p) => (
+              <a
+                key={p.name}
+                href={p.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group rounded-2xl border border-white/10 bg-black/30 p-7 transition hover:border-[#ff6a00]/50"
+              >
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xl font-bold">{p.name}</h3>
+                  <span className="text-neutral-600 transition group-hover:translate-x-1 group-hover:text-[#ff6a00]">
+                    ↗
+                  </span>
+                </div>
+                <p className="mt-3 text-sm leading-relaxed text-neutral-400">{p.desc}</p>
+              </a>
+            ))}
+          </div>
         </div>
       </section>
 
