@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ScrollProgress from "@/components/scroll-progress";
+import TargetCursor from "@/components/target-cursor";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -22,6 +23,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen bg-[#020403] text-neutral-100 antialiased">
         <ScrollProgress />
+        <TargetCursor />
         {children}
       </body>
     </html>
