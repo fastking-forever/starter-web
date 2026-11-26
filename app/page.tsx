@@ -22,6 +22,7 @@ export default function Home() {
           <nav className="hidden items-center gap-7 text-sm text-neutral-400 md:flex">
             <a href="#games" className="transition hover:text-white">الألعاب</a>
             <a href="#play" className="transition hover:text-white">العب دلوقتي</a>
+            <a href="#music" className="transition hover:text-white">الأغنية</a>
             <a href="#ai" className="transition hover:text-white">المساعد</a>
             <a href="#faq" className="transition hover:text-white">الأسئلة</a>
           </nav>
@@ -126,6 +127,40 @@ export default function Home() {
             </p>
           </div>
           <SpaceShooter />
+        </div>
+      </section>
+
+      {/* Music */}
+      <section id="music" className="border-t border-white/10">
+        <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-24 md:grid-cols-2">
+          <div>
+            <p className="text-xs font-bold tracking-[0.25em] text-neutral-500">الموسيقى</p>
+            <h2 className="mt-4 text-4xl font-black tracking-tight md:text-5xl">Royal Funk</h2>
+            <p className="mt-3 text-lg text-neutral-300">Artefxct</p>
+            <p className="mt-5 max-w-md leading-loose text-neutral-400">
+              الأغنية اللي في الفيديو اللي بعته. اسمعها هنا مباشرة من TikTok بدون ما تخرج من الموقع.
+            </p>
+            <a
+              href="https://www.tiktok.com/music/Royal-Funk-7693178966001633332"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-7 inline-block rounded-xl border border-white/20 px-5 py-3 text-sm font-bold transition hover:border-white hover:bg-white/5"
+            >
+              افتح الأغنية على TikTok ↗
+            </a>
+          </div>
+          <div className="mx-auto w-full max-w-sm">
+            <div className="rounded-3xl border border-white/15 bg-white/[0.03] p-3">
+              <iframe
+                src="https://www.tiktok.com/embed/v2/7704109863785450759"
+                title="Royal Funk — Artefxct"
+                className="mx-auto aspect-[9/16] w-full max-w-[320px] rounded-2xl border-0"
+                allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+                allowFullScreen
+                loading="lazy"
+              />
+            </div>
+          </div>
         </div>
       </section>
 
