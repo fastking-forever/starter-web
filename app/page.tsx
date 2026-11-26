@@ -96,7 +96,7 @@ export default function Home() {
           </p>
 
           <p className="mx-auto mt-7 max-w-2xl rounded-xl border border-[#7FF2B0]/25 bg-[#7FF2B0]/[0.06] px-5 py-4 font-display text-base font-black leading-loose text-white shadow-[0_0_25px_rgba(127,242,176,0.1)] md:text-lg">
-            «من لا يبذل نفسه علي مقاعد العلم , اذلته الحياه علي ابوابها»
+            «من لم يذل  نفسه علي مقاعد العلم , اذلته الحياه علي ابوابه»
           </p>
 
           <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
