@@ -39,6 +39,45 @@ async function openaiReply(message: string, apiKey: string) {
   return data.choices?.[0]?.message?.content?.trim() || "ما جاليش رد واضح، حاول تاني.";
 }
 
+// Real model, free and keyless. Limited to one reply every 45s per IP,
+// so it is used as a fallback when no private API key is configured.
+async function pollinationsReply(message: string) {
+  const res = await fetch("https://text.pollinations.ai/openai", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model: "openai",
+      messages: [
+        { role: "system", content: SYSTEM_PROMPT },
+        { role: "user", content: message },
+      ],
+      max_tokens: 300,
+    }),
+  });
+  if (!res.ok) throw new Error(`Pollinations responded with ${res.status}`);
+  const data = (await res.json()) as {
+    choices?: { message?: { content?: string } }[];
+  };
+  return data.choices?.[0]?.message?.content?.trim() || "ما جاليش رد واضح، حاول تاني.";
+}
+
+function localReply(message: string) {
+  const q = message.toLowerCase();
+  if (q.includes("سبواي") || q.includes("subway")) {
+    return "Subway by adam متاحة للتحميل من قسم الألعاب. اضغط «حمّل» وثبّت الملف على جوالك.";
+  }
+  if (q.includes("كور") || q.includes("football")) {
+    return "ADAM Football متاحة للتحميل من قسم الألعاب، ومعها ADAM Strike في المتصفح.";
+  }
+  if (q.includes("نار") || q.includes("فضاء") || q.includes("استر")) {
+    return "ADAM Strike هي لعبة الفضاء اللي بتضرب نار. تقدر تلعبها جوه الموقع من غير تحميل.";
+  }
+  if (q.includes("ايميل") || q.includes("رقم") || q.includes("تواصل")) {
+    return "تواصل مع ADAM على adamehab828@gmail.com أو 01069607847.";
+  }
+  return `وصلني سؤالك: «${message}». المساعد مشغول دلوقتي بسبب حد الخدمة المجانية، حاول تاني بعد دقيقة.`;
+}
+
 export async function POST(request: Request) {
   const body = (await request.json().catch(() => ({}))) as { message?: unknown };
   const message = typeof body.message === "string" ? body.message.trim() : "";
@@ -48,16 +87,21 @@ export async function POST(request: Request) {
   }
 
   const openaiKey = process.env.OPENAI_API_KEY;
+  const gatewayKey = process.env.AI_GATEWAY_API_KEY;
 
-  try {
-    const reply = openaiKey
-      ? await openaiReply(message, openaiKey)
-      : await gatewayReply(message);
-    return NextResponse.json({ reply });
-  } catch {
-    return NextResponse.json({
-      reply: `وصلني سؤالك: «${message}». المساعد هيبقى حقيقي بعد إضافة وسيلة دفع على حساب Vercel لتفعيل AI Gateway، أو بإضافة OPENAI_API_KEY / AI_GATEWAY_API_KEY في Environment Variables.`,
-      demo: true,
-    });
+  const providers: Array<() => Promise<string>> = [];
+  if (openaiKey) providers.push(() => openaiReply(message, openaiKey));
+  if (gatewayKey) providers.push(() => gatewayReply(message));
+  providers.push(() => pollinationsReply(message));
+  if (!gatewayKey) providers.push(() => gatewayReply(message));
+
+  for (const respond of providers) {
+    try {
+      return NextResponse.json({ reply: await respond() });
+    } catch {
+      // Try the next provider.
+    }
   }
+
+  return NextResponse.json({ reply: localReply(message), demo: true });
 }

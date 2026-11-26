@@ -22,9 +22,10 @@ vercel --prod --yes
 
 ## المساعد الذكي
 
-- على Vercel: بيستخدم OIDC تلقائياً عبر Vercel AI Gateway.
-- محلياً أو مع مفتاح خاص: اضبط `AI_GATEWAY_API_KEY` أو `OPENAI_API_KEY` في `.env.local` (مش مترفوع على GitHub).
-- النموذج الافتراضي: `openai/gpt-4o-mini` ويتغيّر عبر `AI_GATEWAY_MODEL`.
+- لو في `OPENAI_API_KEY`: بيستخدم OpenAI مباشرة (أفضل option).
+- لو في `AI_GATEWAY_API_KEY`: بيستخدم Vercel AI Gateway.
+- بدون مفاتيح: بيستخدم نموذج حقيقي مجاني على `text.pollinations.ai` (حد مجاني: رد كل 45 ثانية لكل IP و100 رد يومياً). لو اتجاوز الحد بيرد المساعد برد محلي مختصر.
+- النموذج الافتراضي على Gateway: `openai/gpt-4o-mini` ويتغيّر عبر `AI_GATEWAY_MODEL`.
 
 ## التنزيلات
 

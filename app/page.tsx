@@ -1,7 +1,6 @@
 import AiChat from "@/components/ai-chat";
 import Faq from "@/components/faq";
 import GameLibrary from "@/components/game-library";
-import JavaCode from "@/components/java-code";
 import SpaceShooter from "@/components/space-shooter";
 
 const features = [
@@ -22,7 +21,6 @@ export default function Home() {
           </a>
           <nav className="hidden items-center gap-7 text-sm text-neutral-400 md:flex">
             <a href="#games" className="transition hover:text-white">الألعاب</a>
-            <a href="#java" className="transition hover:text-white">Java</a>
             <a href="#play" className="transition hover:text-white">العب دلوقتي</a>
             <a href="#ai" className="transition hover:text-white">المساعد</a>
             <a href="#faq" className="transition hover:text-white">الأسئلة</a>
@@ -116,8 +114,6 @@ export default function Home() {
       </section>
 
       <GameLibrary />
-
-      <JavaCode />
 
       {/* Playable game */}
       <section id="play" className="border-t border-white/10 bg-white/[0.015]">
