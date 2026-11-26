@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --paper: #020403;
-  --ink: #ffffff;
-  --muted: #cbd5e1;
-  --line: rgba(255, 255, 255, 0.1);
-  --panel: rgba(255, 255, 255, 0.045);
-  --glow: rgba(255, 255, 255, 0.28);
+  --paper: #070A08;
+  --ink: #F2F4F0;
+  --muted: #A8B3AD;
+  --line: rgba(242, 244, 240, 0.1);
+  --panel: rgba(242, 244, 240, 0.045);
+  --glow: rgba(242, 244, 240, 0.28);
 }
 
 * {
@@ -22,10 +22,10 @@ body {
   min-height: 100vh;
   background-color: var(--paper);
   background-image:
-    radial-gradient(circle at 50% 8%, rgba(255, 255, 255, 0.07) 0%, transparent 52%),
-    radial-gradient(circle at 12% 20%, rgba(255, 255, 255, 0.035) 0%, transparent 38%),
-    radial-gradient(circle at 88% 62%, rgba(255, 255, 255, 0.03) 0%, transparent 40%),
-    linear-gradient(to bottom, #020403, #030504);
+    radial-gradient(circle at 50% 8%, rgba(242, 244, 240, 0.07) 0%, transparent 52%),
+    radial-gradient(circle at 12% 20%, rgba(242, 244, 240, 0.035) 0%, transparent 38%),
+    radial-gradient(circle at 88% 62%, rgba(242, 244, 240, 0.03) 0%, transparent 40%),
+    linear-gradient(to bottom, #070A08, #0B100D);
   background-attachment: fixed;
   color: var(--ink);
   font-family: "Cairo", Arial, sans-serif;
@@ -39,8 +39,8 @@ body::before {
   z-index: 0;
   pointer-events: none;
   background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+    linear-gradient(to right, rgba(242, 244, 240, 0.018) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(242, 244, 240, 0.018) 1px, transparent 1px);
   background-size: 45px 45px;
   mask-image: radial-gradient(circle at 50% 30%, black 30%, transparent 72%);
 }
@@ -51,8 +51,8 @@ main {
 }
 
 ::selection {
-  background: #ffffff;
-  color: #020403;
+  background: #F2F4F0;
+  color: #070A08;
 }
 
 ::-webkit-scrollbar {
@@ -60,17 +60,17 @@ main {
 }
 
 ::-webkit-scrollbar-track {
-  background: #050705;
+  background: #070A08;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2b2b2b;
+  background: #333B36;
   border-radius: 99px;
   border: 1px solid var(--line);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #6b6b6b;
+  background: #8A948E;
 }
 
 input,
@@ -94,8 +94,8 @@ kbd {
 
 .mono-grid {
   background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    linear-gradient(to right, rgba(242, 244, 240, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(242, 244, 240, 0.04) 1px, transparent 1px);
   background-size: 45px 45px;
 }
 
@@ -104,16 +104,16 @@ kbd {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.05);
-  color: #ffffff;
+  border: 1px solid rgba(242, 244, 240, 0.2);
+  background: rgba(242, 244, 240, 0.05);
+  color: #F2F4F0;
   border-radius: 9999px;
   padding: 0.3rem 0.9rem;
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  box-shadow: 0 0 18px rgba(255, 255, 255, 0.07);
+  box-shadow: 0 0 18px rgba(242, 244, 240, 0.07);
 }
 
 .section-title {
@@ -125,55 +125,55 @@ kbd {
 }
 
 .section-desc {
-  color: #a9b4c2;
+  color: #A8B3AD;
   line-height: 1.9;
   font-size: 0.95rem;
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #ffffff 10%, #9aa3ad 55%, #ffffff 100%);
+  background: linear-gradient(135deg, #F2F4F0 10%, #9EA8A2 55%, #F2F4F0 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 22px rgba(255, 255, 255, 0.25));
+  filter: drop-shadow(0 0 22px rgba(242, 244, 240, 0.25));
 }
 
 .glass-card {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.065), rgba(255, 255, 255, 0.018));
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(180deg, rgba(242, 244, 240, 0.065), rgba(242, 244, 240, 0.018));
+  border: 1px solid rgba(242, 244, 240, 0.1);
   backdrop-filter: blur(22px);
   -webkit-backdrop-filter: blur(22px);
   box-shadow:
     0 20px 45px -12px rgba(0, 0, 0, 0.7),
-    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+    inset 0 1px 0 rgba(242, 244, 240, 0.07);
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s, box-shadow 0.35s;
 }
 
 .glass-card:hover {
   transform: translateY(-5px);
-  border-color: rgba(255, 255, 255, 0.34);
+  border-color: rgba(242, 244, 240, 0.34);
   box-shadow:
     0 25px 55px -12px rgba(0, 0, 0, 0.85),
-    0 0 28px rgba(255, 255, 255, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+    0 0 28px rgba(242, 244, 240, 0.12),
+    inset 0 1px 0 rgba(242, 244, 240, 0.16);
 }
 
 .accent-line {
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.35);
+  background: linear-gradient(90deg, transparent, rgba(242, 244, 240, 0.6), transparent);
+  box-shadow: 0 0 10px rgba(242, 244, 240, 0.35);
 }
 
 .diamond {
   width: 34px;
   height: 34px;
   transform: rotate(45deg);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(242, 244, 240, 0.3);
+  background: rgba(242, 244, 240, 0.06);
   border-radius: 6px;
   display: grid;
   place-items: center;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 15px rgba(242, 244, 240, 0.12);
 }
 
 .diamond > * {
@@ -185,20 +185,20 @@ kbd {
   align-items: center;
   justify-content: center;
   gap: 0.55rem;
-  background: linear-gradient(135deg, #ffffff, #d4d4d4);
-  color: #050705;
+  background: linear-gradient(135deg, #F2F4F0, #d4d4d4);
+  color: #070A08;
   border: none;
   border-radius: 9999px;
   padding: 0.75rem 1.6rem;
   font-weight: 800;
   font-size: 0.9rem;
-  box-shadow: 0 0 22px rgba(255, 255, 255, 0.22);
+  box-shadow: 0 0 22px rgba(242, 244, 240, 0.22);
   transition: transform 0.25s, box-shadow 0.25s, filter 0.25s;
 }
 
 .btn-primary:hover {
   filter: brightness(1.08);
-  box-shadow: 0 0 32px rgba(255, 255, 255, 0.42);
+  box-shadow: 0 0 32px rgba(242, 244, 240, 0.42);
   transform: translateY(-2px);
 }
 
@@ -207,11 +207,11 @@ kbd {
   align-items: center;
   justify-content: center;
   gap: 0.55rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(242, 244, 240, 0.03);
+  border: 1px solid rgba(242, 244, 240, 0.16);
   border-radius: 9999px;
   padding: 0.75rem 1.6rem;
-  color: #ffffff;
+  color: #F2F4F0;
   font-weight: 700;
   font-size: 0.9rem;
   backdrop-filter: blur(12px);
@@ -219,9 +219,9 @@ kbd {
 }
 
 .btn-ghost:hover {
-  background: rgba(255, 255, 255, 0.09);
-  border-color: rgba(255, 255, 255, 0.5);
-  box-shadow: 0 0 22px rgba(255, 255, 255, 0.16);
+  background: rgba(242, 244, 240, 0.09);
+  border-color: rgba(242, 244, 240, 0.5);
+  box-shadow: 0 0 22px rgba(242, 244, 240, 0.16);
   transform: translateY(-2px);
 }
 
@@ -240,7 +240,7 @@ kbd {
   height: 380px;
   top: 8%;
   right: -6%;
-  background: rgba(255, 255, 255, 0.14);
+  background: rgba(242, 244, 240, 0.14);
 }
 
 .orb-two {
@@ -248,7 +248,7 @@ kbd {
   height: 420px;
   bottom: 12%;
   left: -8%;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(242, 244, 240, 0.1);
   animation-delay: -6s;
 }
 
@@ -286,7 +286,7 @@ kbd {
 .animate-bounce-down { animation: bounceDown 2s infinite; }
 
 input[type="range"] {
-  accent-color: #ffffff;
+  accent-color: #F2F4F0;
 }
 
 button,
@@ -310,7 +310,7 @@ body.hide-default-cursor * {
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.18s ease;
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.65));
+  filter: drop-shadow(0 0 8px rgba(242, 244, 240, 0.65));
   will-change: transform;
 }
 
@@ -321,8 +321,8 @@ body.hide-default-cursor * {
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: #ffffff;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
+  background: #F2F4F0;
+  box-shadow: 0 0 10px rgba(242, 244, 240, 0.9);
   transform: translate(-50%, -50%);
   will-change: transform;
 }
@@ -333,7 +333,7 @@ body.hide-default-cursor * {
   top: 50%;
   width: 11px;
   height: 11px;
-  border: 2px solid #ffffff;
+  border: 2px solid #F2F4F0;
   border-radius: 1px;
   will-change: transform, scale;
 }
@@ -366,4 +366,13 @@ body.hide-default-cursor * {
   .target-cursor-wrapper {
     display: none;
   }
+}
+
+/* Warm ivory instead of pure white across the UI */
+.text-white {
+  color: var(--ink) !important;
+}
+
+.bg-white {
+  background-color: var(--ink) !important;
 }

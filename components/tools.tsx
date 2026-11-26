@@ -199,7 +199,7 @@ function QrMaker() {
     QRCode.toCanvas(canvas, text, {
       width: 232,
       margin: 1,
-      color: { dark: "#070707", light: "#fafafa" },
+      color: { dark: "#070A08", light: "#F2F4F0" },
     })
       .then(() => {
         if (active) setError("");

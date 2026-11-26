@@ -21,7 +21,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-screen bg-[#020403] text-neutral-100 antialiased">
+      <body className="min-h-screen bg-[#070A08] text-neutral-100 antialiased">
         <ScrollProgress />
         <TargetCursor />
         {children}

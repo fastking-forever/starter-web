@@ -84,7 +84,7 @@ export default function SpaceShooter() {
       const dt = Math.min((now - last) / 1000, 0.05);
       last = now;
 
-      ctx.fillStyle = "#070707";
+      ctx.fillStyle = "#070A08";
       ctx.fillRect(0, 0, W, H);
 
       for (const s of stars) {
