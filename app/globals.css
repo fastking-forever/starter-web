@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #0a0a0a;
+  --ink: #f5f5f5;
+  --accent: #ff6a00;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+::selection {
+  background: var(--accent);
+  color: #0a0a0a;
+}
