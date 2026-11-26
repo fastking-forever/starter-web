@@ -77,6 +77,8 @@ export default function TargetCursor() {
     }
 
     function onMove(event: MouseEvent) {
+      document.documentElement.style.setProperty("--mx", `${event.clientX}px`);
+      document.documentElement.style.setProperty("--my", `${event.clientY}px`);
       const first = !visible;
       visible = true;
       wrapper!.style.opacity = "1";
@@ -111,11 +113,18 @@ export default function TargetCursor() {
       if (document.hidden) hide();
     }
 
+    const header = document.querySelector("header");
+    const onScroll = () => {
+      header?.classList.toggle("scrolled", window.scrollY > 24);
+    };
+    onScroll();
+
     document.addEventListener("mousemove", onMove, { passive: true });
     document.addEventListener("mouseover", onOver, { passive: true });
     document.addEventListener("mouseleave", hide);
     window.addEventListener("blur", hide);
     document.addEventListener("visibilitychange", onVisibility);
+    window.addEventListener("scroll", onScroll, { passive: true });
 
     return () => {
       if (raf) cancelAnimationFrame(raf);
@@ -124,6 +133,7 @@ export default function TargetCursor() {
       document.removeEventListener("mouseleave", hide);
       window.removeEventListener("blur", hide);
       document.removeEventListener("visibilitychange", onVisibility);
+      window.removeEventListener("scroll", onScroll);
       document.body.classList.remove("hide-default-cursor");
     };
   }, []);
