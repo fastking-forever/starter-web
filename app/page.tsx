@@ -66,6 +66,19 @@ export default function Home() {
         <div className="accent-line" />
       </header>
 
+      {/* Mobile navigation */}
+      <nav className="sticky top-16 z-40 flex gap-1 overflow-x-auto border-b border-white/10 bg-[#030604]/90 px-4 py-2 backdrop-blur-xl lg:hidden">
+        {navLinks.map((link) => (
+          <a
+            key={link.href}
+            href={link.href}
+            className="shrink-0 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[11px] font-bold text-white/70 transition hover:border-white/40 hover:text-white"
+          >
+            {link.label}
+          </a>
+        ))}
+      </nav>
+
       {/* Hero */}
       <section id="home" className="relative flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center overflow-hidden px-5 pb-16 pt-28 text-center md:px-8">
         <div className="orb orb-one" />

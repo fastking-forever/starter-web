@@ -26,13 +26,22 @@ export default function ContactCards() {
   const [copied, setCopied] = useState("");
 
   async function copy(value: string) {
+    let ok = false;
     try {
       await navigator.clipboard.writeText(value);
-      setCopied(value);
-      window.setTimeout(() => setCopied(""), 1600);
+      ok = true;
     } catch {
-      setCopied("");
+      const field = document.createElement("textarea");
+      field.value = value;
+      field.style.position = "fixed";
+      field.style.opacity = "0";
+      document.body.appendChild(field);
+      field.select();
+      ok = document.execCommand("copy");
+      field.remove();
     }
+    setCopied(ok ? value : "");
+    if (ok) window.setTimeout(() => setCopied(""), 1600);
   }
 
   return (
