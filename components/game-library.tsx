@@ -257,8 +257,16 @@ export default function GameLibrary() {
             </button>
           </div>
         )}
-        <p role="status" aria-live="polite" className="sr-only">{copyMessage}</p>
       </div>
+      {copyMessage && (
+        <div
+          role="status"
+          aria-live="polite"
+          className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-full border border-[#7FF2B0]/40 bg-[#06100C]/95 px-5 py-2.5 text-xs font-bold text-[#7FF2B0] shadow-lg shadow-black/40 backdrop-blur"
+        >
+          {copyMessage}
+        </div>
+      )}
     </section>
   );
 }
