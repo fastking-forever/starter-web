@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import QRCode from "qrcode";
+import { useEffect, useRef, useState } from "react";
 
 const keys = [
   ["C", "C"], ["(", "("], [")", ")"], ["÷", "/"],
@@ -186,6 +187,109 @@ function Countdown() {
   );
 }
 
+function QrMaker() {
+  const [text, setText] = useState("https://adam-wab.vercel.app");
+  const [error, setError] = useState("");
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas || !text.trim()) return;
+    let active = true;
+    QRCode.toCanvas(canvas, text, {
+      width: 232,
+      margin: 1,
+      color: { dark: "#070707", light: "#fafafa" },
+    })
+      .then(() => {
+        if (active) setError("");
+      })
+      .catch(() => {
+        if (active) setError("النص طويل جداً، قصّره شوية.");
+      });
+    return () => {
+      active = false;
+    };
+  }, [text]);
+
+  function download() {
+    const href = canvasRef.current?.toDataURL("image/png");
+    if (!href) return;
+    const a = document.createElement("a");
+    a.href = href;
+    a.download = "adam-qr.png";
+    a.click();
+  }
+
+  return (
+    <article className="rounded-2xl border border-white/15 bg-white/[0.02] p-6">
+      <h3 className="text-xl font-bold">مولّد QR</h3>
+      <p className="mt-2 text-xs text-neutral-500">حول أي رابط أو نص لرمز QR جوه المتصفح.</p>
+      <input
+        dir="ltr"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder="اكتب رابط أو نص..."
+        className="mt-5 w-full rounded-xl border border-white/15 bg-black/40 px-4 py-3 text-left font-mono text-xs outline-none placeholder:text-neutral-600 focus:border-white/60"
+      />
+      <div className="mt-4 grid place-items-center rounded-xl bg-white p-3">
+        <canvas ref={canvasRef} className="block" />
+      </div>
+      <div className="mt-4 flex flex-wrap gap-2">
+        <button
+          onClick={download}
+          className="rounded-lg border border-white/15 px-4 py-2 text-xs font-bold transition hover:border-white"
+        >
+          حمّل PNG ↓
+        </button>
+        {error && <span className="text-xs text-neutral-400">{error}</span>}
+      </div>
+    </article>
+  );
+}
+
+function ArabicText() {
+  const [text, setText] = useState("");
+  const [copied, setCopied] = useState(false);
+
+  const clean = (fn: (s: string) => string) => setText((prev) => fn(prev));
+
+  async function copy() {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1500);
+    } catch {
+      setCopied(false);
+    }
+  }
+
+  return (
+    <article className="rounded-2xl border border-white/15 bg-white/[0.02] p-6">
+      <h3 className="text-xl font-bold">أدوات النص العربي</h3>
+      <p className="mt-2 text-xs text-neutral-500">نظّف النص العربي في ضغطة واحدة.</p>
+      <textarea
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        rows={5}
+        placeholder="الصق النص هنا..."
+        className="mt-5 w-full resize-none rounded-xl border border-white/15 bg-black/40 p-4 text-sm leading-relaxed outline-none placeholder:text-neutral-600 focus:border-white/60"
+      />
+      <div className="mt-3 flex flex-wrap gap-2">
+        <button onClick={() => clean((s) => s.replace(/[\u064B-\u065F\u0670\u0640]/g, ""))} className="rounded-lg border border-white/15 px-3 py-2 text-[11px] transition hover:border-white">إزالة التشكيل</button>
+        <button onClick={() => clean((s) => s.replace(/[أإآ]/g, "ا"))} className="rounded-lg border border-white/15 px-3 py-2 text-[11px] transition hover:border-white">توحيد الألف</button>
+        <button onClick={() => clean((s) => s.replace(/ى/g, "ي").replace(/ئ/g, "ي"))} className="rounded-lg border border-white/15 px-3 py-2 text-[11px] transition hover:border-white">توحيد الياء</button>
+        <button onClick={() => clean((s) => s.replace(/ة/g, "ه"))} className="rounded-lg border border-white/15 px-3 py-2 text-[11px] transition hover:border-white">توحيد التاء</button>
+        <button onClick={() => clean((s) => s.replace(/\s+/g, " ").trim())} className="rounded-lg border border-white/15 px-3 py-2 text-[11px] transition hover:border-white">ضغط المسافات</button>
+      </div>
+      <div className="mt-4 flex items-center justify-between text-[11px] text-neutral-500">
+        <span>{text.trim() ? text.trim().split(/\s+/).length : 0} كلمة · {text.length} حرف</span>
+        <button onClick={() => void copy()} className="font-bold transition hover:text-white">{copied ? "تم النسخ ✓" : "نسخ ⧉"}</button>
+      </div>
+    </article>
+  );
+}
+
 export default function Tools() {
   return (
     <section id="tools" className="border-t border-white/10 bg-white/[0.015]">
@@ -193,12 +297,14 @@ export default function Tools() {
         <p className="text-xs font-bold tracking-[0.25em] text-neutral-500">خدمات ADAM</p>
         <h2 className="mt-4 text-4xl font-black tracking-tight md:text-5xl">أدوات جوه الموقع</h2>
         <p className="mt-4 max-w-xl text-sm leading-loose text-neutral-400">
-          حاسبة، كلمة مرور قوية، ومؤقت — كلها شغالة فوراً من غير تسجيل أو تحميل.
+          حاسبة، كلمة مرور، مؤقت، QR، وتنظيف نصوص عربية — كلها شغالة من غير تسجيل أو تحميل.
         </p>
-        <div className="mt-12 grid gap-5 md:grid-cols-3">
+        <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           <Calculator />
           <PasswordMaker />
           <Countdown />
+          <QrMaker />
+          <ArabicText />
         </div>
       </div>
     </section>

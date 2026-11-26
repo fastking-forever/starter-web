@@ -2,6 +2,7 @@ import AiChat from "@/components/ai-chat";
 import DinoGame from "@/components/dino-game";
 import Faq from "@/components/faq";
 import GameLibrary from "@/components/game-library";
+import GameWheel from "@/components/game-wheel";
 import ImageStudio from "@/components/image-studio";
 import SpaceShooter from "@/components/space-shooter";
 import Tools from "@/components/tools";
@@ -9,7 +10,7 @@ import Tools from "@/components/tools";
 const features = [
   { n: "01", title: "تحميل مباشر", body: "اضغط و	nزّل. مفيش تسجيل، مفيش انتظار، مفيش تعقيد.", icon: "↓" },
   { n: "02", title: "العب من الموقع", body: "لعبتين شغالتين جوه الصفحة: ADAM Strike وADAM Dino.", icon: "✦" },
-  { n: "03", title: "استوديو وخدمات", body: "مولّد صور بالذكاء الاصطناعي، وحاسبة ومؤقت، ومساعد ذكي.", icon: "◈" },
+  { n: "03", title: "استوديو وخدمات", body: "صور بالذكاء الاصطناعي وQR وعجلة اختيار وأدوات نص ومساعد ذكي.", icon: "◈" },
 ];
 
 export default function Home() {
@@ -26,6 +27,7 @@ export default function Home() {
             <a href="#games" className="transition hover:text-white">الألعاب</a>
             <a href="#play" className="transition hover:text-white">العب دلوقتي</a>
             <a href="#dino" className="transition hover:text-white">الديناصور</a>
+            <a href="#wheel" className="transition hover:text-white">العجلة</a>
             <a href="#tools" className="transition hover:text-white">خدمات</a>
             <a href="#create" className="transition hover:text-white">استوديو الصور</a>
             <a href="#ai" className="transition hover:text-white">المساعد</a>
@@ -81,7 +83,7 @@ export default function Home() {
             {[
               ["٥", "ألعاب للتنزيل"],
               ["٢", "لعبتين في المتصفح"],
-              ["٤", "خدمات وأدوات"],
+              ["٧", "أدوات وتجارب"],
             ].map(([value, label]) => (
               <div key={label}>
                 <dt className="text-2xl font-black">{value}</dt>
@@ -150,6 +152,22 @@ export default function Home() {
             </p>
           </div>
           <DinoGame />
+        </div>
+      </section>
+
+      {/* Random wheel */}
+      <section id="wheel" className="border-t border-white/10">
+        <div className="mx-auto max-w-6xl px-6 py-24">
+          <div className="mb-9 flex flex-wrap items-end justify-between gap-5">
+            <div>
+              <p className="text-xs font-bold tracking-[0.25em] text-neutral-500">اختار بسرعة</p>
+              <h2 className="mt-4 text-4xl font-black tracking-tight md:text-5xl">عجلة ADAM</h2>
+            </div>
+            <p className="max-w-md text-sm leading-loose text-neutral-400">
+              مش عارف تلعب إيه؟ دوّر العجلة وهتختار لك من الألعاب الخمسة.
+            </p>
+          </div>
+          <GameWheel />
         </div>
       </section>
 
