@@ -78,6 +78,9 @@ function PasswordMaker() {
     setValue(Array.from(random, (n) => chars[n % chars.length]).join(""));
   }, [length, symbols, nonce]);
 
+  const strength = Math.min(100, Math.round(((length - 8) / 24) * 70 + (symbols ? 30 : 0)));
+  const strengthLabel = strength >= 80 ? "قوية جداً" : strength >= 55 ? "قوية" : strength >= 30 ? "متوسطة" : "ضعيفة";
+
   async function copy() {
     try {
       await navigator.clipboard.writeText(value);
@@ -104,6 +107,18 @@ function PasswordMaker() {
         <button onClick={() => void copy()} className="shrink-0 text-xs font-bold text-neutral-400 transition hover:text-[#7FF2B0]">
           {copied ? "تم ✓" : "نسخ ⧉"}
         </button>
+      </div>
+      <div className="mt-4">
+        <div className="flex items-center justify-between text-[11px] text-neutral-500">
+          <span>قوة كلمة المرور</span>
+          <span className="font-bold text-[#7FF2B0]">{strengthLabel}</span>
+        </div>
+        <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/10">
+          <div
+            className="h-full rounded-full bg-[#7FF2B0] transition-[width] duration-300"
+            style={{ width: `${strength}%` }}
+          />
+        </div>
       </div>
       <label className="mt-5 block text-xs text-neutral-400">
         الطول: {length}
@@ -147,9 +162,10 @@ function Countdown() {
   function changeMinutes(n: number) {
     const next = Math.min(60, Math.max(1, n));
     setMinutes(next);
-    if (!running) setRemaining(next * 60);
+    setRemaining(next * 60);
   }
 
+  const finished = remaining === 0;
   const mm = String(Math.floor(remaining / 60)).padStart(2, "0");
   const ss = String(remaining % 60).padStart(2, "0");
 
@@ -160,6 +176,9 @@ function Countdown() {
       <div dir="ltr" className="mt-5 rounded-xl border border-white/15 bg-black px-4 py-5 text-center font-mono text-5xl font-bold">
         {mm}:{ss}
       </div>
+      {finished && (
+        <p role="status" className="mt-3 text-center text-xs font-bold text-[#7FF2B0]">⏰ انتهى الوقت</p>
+      )}
       <div className="mt-5 flex flex-wrap items-center gap-2">
         {[1, 5, 10].map((n) => (
           <button
@@ -179,7 +198,7 @@ function Countdown() {
           }}
           className="rounded-lg border border-white/15 px-4 py-2 text-xs font-bold transition hover:border-white"
         >
-          {running ? "إيقاف مؤقت" : "ابدأ"}
+          {running ? "إيقاف مؤقت" : finished ? "ابدأ من جديد" : "ابدأ"}
         </button>
         <button
           onClick={() => {
