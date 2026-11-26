@@ -12,7 +12,7 @@ const SYSTEM_PROMPT = `أنت مساعد عربي مختصر وودود لموق
 - في قسم «استوديو الصور» تقدر تكتب وصف بالعربي وتولّد صورة بالذكاء الاصطناعي بالأبيض والأسود.
 - في قسم «عجلة ADAM» تقدر تدوّر عجلة تختار لك لعبة عشوائياً.
 - التواصل: adamehab828@gmail.com أو 01069607847.
-رد بالعربية الفصحى البسيطة في جمل قصيرة. لا تذكر أي لعبة أو تفصيل أو اسم غير مذكور هنا. لو ما عندكش إجابة، قل: «اسألني عن الألعاب أو التحميل».`;
+رد بالعربية الفصحى البسيطة في جمل قصيرة. لا تذكر أي لعبة أو تفصيل أو اسم غير مذكور هنا. لو ما عندكش إجابة، قل بالظبط: «مش فاضي 😅 اسألني عن الألعاب أو التحميل».`;
 
 async function gatewayReply(message: string) {
   const { text } = await generateText({
@@ -101,8 +101,32 @@ function quickReply(message: string): string | null {
   return null;
 }
 
+const UNKNOWN_REPLIES = [
+  "مش فاضي 😅 اسألني عن الألعاب أو التحميل.",
+  "طز 😎 اسألني عن الألعاب أو التحميل وأساعدك.",
+];
+
+function unknownReply() {
+  return UNKNOWN_REPLIES[Math.floor(Math.random() * UNKNOWN_REPLIES.length)];
+}
+
+// Even if a provider ignores the system prompt, keep the assistant's voice consistent.
+function tidyReply(text: string) {
+  const trimmed = text.trim();
+  if (
+    !trimmed ||
+    trimmed === "اسألني عن الألعاب أو التحميل" ||
+    trimmed === "اسألني عن الألعاب أو التحميل." ||
+    trimmed === "ما جاليش رد واضح، حاول تاني." ||
+    trimmed.includes("ما عندكش إجابة")
+  ) {
+    return unknownReply();
+  }
+  return trimmed;
+}
+
 function localReply(message: string) {
-  return quickReply(message) ?? "ما لقيتش إجابة واضحة لسؤالك دلوقتي. اسألني عن الألعاب أو التحميل أو التواصل، وأساعدك فوراً.";
+  return quickReply(message) ?? unknownReply();
 }
 
 export async function POST(request: Request) {
@@ -127,7 +151,7 @@ export async function POST(request: Request) {
 
   for (const respond of providers) {
     try {
-      return NextResponse.json({ reply: await respond() });
+      return NextResponse.json({ reply: tidyReply(await respond()) });
     } catch {
       // Try the next provider.
     }
