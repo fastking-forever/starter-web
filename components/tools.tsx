@@ -188,7 +188,7 @@ function Countdown() {
 }
 
 function QrMaker() {
-  const [text, setText] = useState("https://adam-wab.vercel.app");
+  const [text, setText] = useState("https://adam-web-site.vercel.app");
   const [error, setError] = useState("");
   const canvasRef = useRef<HTMLCanvasElement>(null);
 

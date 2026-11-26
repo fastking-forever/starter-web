@@ -18,7 +18,7 @@ npm run build
 vercel --prod --yes
 ```
 
-الموقع الحي: https://adam-wab.vercel.app
+الموقع الحي: https://adam-web-site.vercel.app
 
 ## المساعد الذكي
 
