@@ -134,41 +134,23 @@ export default function Home() {
             <h2 className="section-title mt-5">مقدمة ADAM</h2>
             <p className="section-desc mx-auto mt-3 max-w-xl">شوف البداية، وبعدين اختار لعبتك وابدأ.</p>
           </div>
-          <div className="glass-card mx-auto max-w-5xl overflow-hidden rounded-2xl p-2">
-            <div className="grid gap-2 md:grid-cols-2">
-              <div className="relative overflow-hidden rounded-xl border border-white/10">
-                <span className="absolute right-3 top-3 z-10 rounded-md border border-white/15 bg-[#06100C]/75 px-2 py-1 font-mono text-[10px] tracking-[0.2em] text-white/70 backdrop-blur">
-                  INTRO
-                </span>
-                <video
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  preload="auto"
-                  aria-label="ADAM — مقدمة متحركة"
-                  className="aspect-video w-full object-cover"
-                >
-                  <source src="/adam-intro.mp4" type="video/mp4" />
-                </video>
-              </div>
-              <div className="relative overflow-hidden rounded-xl border border-white/10">
-                <span className="absolute right-3 top-3 z-10 rounded-md border border-white/15 bg-[#06100C]/75 px-2 py-1 font-mono text-[10px] tracking-[0.2em] text-white/70 backdrop-blur">
-                  ADAM MOTION
-                </span>
-                <video
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  preload="metadata"
-                  poster="/adam-motion-poster.webp"
-                  aria-label="ADAM — لقطة متحركة"
-                  className="aspect-video w-full object-cover"
-                >
-                  <source src="/adam-motion.mp4" type="video/mp4" />
-                </video>
-              </div>
+          <div className="glass-card mx-auto max-w-3xl overflow-hidden rounded-2xl p-2">
+            <div className="relative overflow-hidden rounded-xl border border-white/10">
+              <span className="absolute right-3 top-3 z-10 rounded-md border border-white/15 bg-[#06100C]/75 px-2 py-1 font-mono text-[10px] tracking-[0.2em] text-white/70 backdrop-blur">
+                ADAM MOTION
+              </span>
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="metadata"
+                poster="/adam-motion-poster.webp"
+                aria-label="ADAM — لقطة متحركة"
+                className="aspect-video w-full object-cover"
+              >
+                <source src="/adam-motion.mp4" type="video/mp4" />
+              </video>
             </div>
           </div>
         </div>
