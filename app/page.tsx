@@ -86,9 +86,6 @@ export default function Home() {
         <div className="mono-grid pointer-events-none absolute inset-0 opacity-60 [mask-image:radial-gradient(circle_at_50%_35%,black,transparent_70%)]" />
 
         <div className="relative z-10 w-full max-w-4xl">
-          <p className="mx-auto mb-7 max-w-2xl border-r-2 border-[#7FF2B0]/50 pr-4 text-right font-display text-sm leading-loose text-white/75 md:text-base">
-            «من لا يبذل نفسه علي مقاعد العلم , اذلته الحياه علي ابوابها»
-          </p>
           <span className="section-tag">◈ Premium Arabic Arcade</span>
           <h1 className="font-display mt-7 text-5xl font-black leading-[1.1] md:text-7xl">
             أهلًا بك في <span className="gradient-text">ADAM</span>
@@ -96,6 +93,10 @@ export default function Home() {
           <p className="mx-auto mt-5 max-w-2xl text-base leading-loose text-white/60 md:text-lg">
             خمسة ألعاب باسم ADAM، ولعبتين تقدر تلعبهم فوراً في المتصفح،
             واستوديو صور وأدوات ذكية تجربها من غير تسجيل.
+          </p>
+
+          <p className="mx-auto mt-7 max-w-2xl rounded-xl border border-[#7FF2B0]/25 bg-[#7FF2B0]/[0.06] px-5 py-4 font-display text-base font-black leading-loose text-white shadow-[0_0_25px_rgba(127,242,176,0.1)] md:text-lg">
+            «من لا يبذل نفسه علي مقاعد العلم , اذلته الحياه علي ابوابها»
           </p>
 
           <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
@@ -181,7 +182,7 @@ export default function Home() {
 
       {/* Playable game */}
       <section id="play" className="border-t border-white/10 bg-white/[0.015]">
-        <div className="mx-auto max-w-6xl px-6 py-24">
+        <div className="mx-auto max-w-3xl px-6 py-24">
           <div className="mb-10 text-center">
             <span className="section-tag">تجربة تفاعلية</span>
             <h2 className="section-title mt-5">العب من غير تحميل</h2>
