@@ -8,6 +8,8 @@ const suggestions = [
   "أنزّل لعبة سبواي",
   "إزاي ألعب كورة؟",
   "فين لعبة ضرب النار؟",
+  "إيه هو يومك أهم؟",
+  "عرفني بـ ADAM Game",
 ];
 
 const welcome: Message = {
@@ -122,6 +124,7 @@ export default function AiChat() {
         {suggestions.map((s) => (
           <button
             key={s}
+            type="button"
             onClick={() => void send(s)}
             disabled={loading}
             className="rounded-full border border-white/15 px-3 py-1.5 text-xs text-neutral-400 transition hover:border-white hover:text-white disabled:cursor-not-allowed disabled:opacity-40"

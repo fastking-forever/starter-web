@@ -66,7 +66,10 @@ export default function ImageStudio() {
       if (objectUrlRef.current) URL.revokeObjectURL(objectUrlRef.current);
       objectUrlRef.current = displayUrl.startsWith("blob:") ? displayUrl : null;
       setImage(displayUrl);
-      remember({ url: localUrl, prompt: text, seed: nextSeed });
+      // Keep the deterministic public URL in history. The local API URL is
+      // rate-limited and blob URLs die on reload, so neither survives a
+      // return visit to the studio.
+      remember({ url: directUrl, prompt: text, seed: nextSeed });
       setError("");
       setLoading(false);
     };
@@ -148,6 +151,12 @@ export default function ImageStudio() {
               id="image-prompt"
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
+              onKeyDown={(e) => {
+                if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+                  e.preventDefault();
+                  generate();
+                }
+              }}
               rows={5}
               placeholder="مثال: ديناصور بكسل بيقفز فوق صبار في الفضاء..."
               className="mt-3 w-full resize-none rounded-xl border border-white/15 bg-black/40 p-4 text-sm leading-relaxed outline-none placeholder:text-neutral-600 focus:border-white/60"
@@ -171,7 +180,7 @@ export default function ImageStudio() {
               {loading ? "جارٍ التوليد..." : "ولّد الصورة ✦"}
             </button>
             <p className="mt-3 text-center text-[11px] text-neutral-600">
-              بدون تسجيل · صورة واحدة كل 45 ثانية تقريباً · البذرة {seed}
+              بدون تسجيل · صورة واحدة كل 45 ثانية تقريباً · البذرة {seed} · Ctrl+Enter للتوليد
             </p>
             {error && <p className="mt-3 text-xs leading-relaxed text-neutral-300">{error}</p>}
           </div>
@@ -218,6 +227,7 @@ export default function ImageStudio() {
               {history.map((item) => (
                 <button
                   key={item.url}
+                  type="button"
                   onClick={() => {
                     setImage(item.url);
                     setPrompt(item.prompt);
@@ -225,6 +235,7 @@ export default function ImageStudio() {
                   }}
                   className="aspect-square overflow-hidden rounded-lg border border-white/15 transition hover:border-white"
                   title={item.prompt}
+                  aria-label={`عرض الصورة: ${item.prompt}`}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={item.url} alt={item.prompt} className="h-full w-full object-cover grayscale" />
