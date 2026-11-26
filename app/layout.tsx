@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "نَبْض | منصة تعريفية",
-  description: "صفحة تعريفية أنيقة مع مساعد ذكي مدمج",
+  title: "ADAM | منصة تعريفية",
+  description: "منصة ADAM: هوية، تجارب تفاعلية، مساعد ذكي، وتنزيلات ألعاب.",
 };
 
 export default function RootLayout({

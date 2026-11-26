@@ -5,16 +5,16 @@ import { useState, type FormEvent } from "react";
 type Message = { role: "user" | "assistant"; content: string };
 
 const suggestions = [
-  "إيه اللي بيميّز المنصة؟",
-  "إزاي أبدأ في دقيقتين؟",
-  "هل الدردشة بتدعم العربي؟",
+  "إيه اللي بيميّز ADAM؟",
+  "فين ألاقي التجارب؟",
+  "إزاي أنزّل الألعاب؟",
 ];
 
 export default function AiChat() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "أهلاً بك 👋 أنا مساعد المنصة. اسألني أي حاجة عن المشروع أو النظام.",
+      content: "أهلاً بك 👋 أنا مساعد ADAM. اسألني عن المشاريع، التجارب، أو تنزيلات الألعاب.",
     },
   ]);
   const [input, setInput] = useState("");
