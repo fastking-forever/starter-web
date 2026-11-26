@@ -242,7 +242,7 @@ export default function SpaceShooter() {
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <div>
           <p className="text-xs font-bold tracking-[0.25em] text-neutral-500">جوه الموقع</p>
-          <h3 className="mt-2 text-2xl font-black">SPACE SHOOTER</h3>
+          <h3 className="mt-2 text-2xl font-black">ADAM STRIKE</h3>
         </div>
         <div className="flex items-center gap-3 text-sm">
           <span className="rounded-lg border border-white/15 px-3 py-1.5">النقاط: <b>{score}</b></span>

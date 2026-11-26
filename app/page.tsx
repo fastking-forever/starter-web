@@ -35,65 +35,52 @@ export default function Home() {
       </header>
 
       {/* Hero */}
-      <section className="relative mx-auto max-w-6xl px-6 pb-24 pt-20 md:pt-28">
-        <div className="mono-grid pointer-events-none absolute inset-x-0 top-0 h-[420px] opacity-60 [mask-image:linear-gradient(to_bottom,black,transparent)]" />
-        <div className="relative grid items-center gap-14 md:grid-cols-[1.2fr_0.8fr]">
-          <div>
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-1.5 text-xs font-semibold text-neutral-300">
-              <span className="h-1.5 w-1.5 rounded-full bg-white" />
-              ADAM · ألعابك في مكان واحد
-            </span>
-            <h1 className="mt-8 text-5xl font-black leading-[1.08] tracking-tight md:text-7xl">
-              العب. نزّل.
-              <br />
-              <span className="text-neutral-500">خلّي اليوم ممتع.</span>
-            </h1>
-            <p className="mt-7 max-w-xl text-lg leading-relaxed text-neutral-400">
-              كل ألعاب ADAM في مكان واحد: سبواي، كورة، استريك، يومك أهم، وألعاب فضاء بتضرب نار.
-              وتقدر تلعب واحدة منهم هنا في المتصفح مباشرة.
-            </p>
-            <div className="mt-9 flex flex-wrap gap-3">
-              <a href="#games" className="rounded-xl bg-white px-6 py-3.5 text-sm font-bold text-black transition hover:bg-neutral-300">
-                تصفّح الألعاب
-              </a>
-              <a href="#play" className="rounded-xl border border-white/25 px-6 py-3.5 text-sm font-bold transition hover:border-white hover:bg-white/5">
-                جرّب لعبة الفضاء
-              </a>
-            </div>
-            <dl className="mt-12 flex flex-wrap gap-10 border-t border-white/10 pt-7">
-              {[
-                ["١٢", "لعبة للتنزيل"],
-                ["٣", "أنواع أندرويد"],
-                ["∞", "مرح ومتعة"],
-              ].map(([value, label]) => (
-                <div key={label}>
-                  <dt className="text-2xl font-black">{value}</dt>
-                  <dd className="mt-1 text-xs text-neutral-500">{label}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
+      <section className="relative mx-auto max-w-7xl px-4 pb-20 pt-10 md:px-8 md:pt-16">
+        <div className="mono-grid pointer-events-none absolute inset-x-0 top-0 h-[540px] opacity-70 [mask-image:linear-gradient(to_bottom,black,transparent)]" />
+        <div className="relative flex items-center justify-between border-b border-white/10 pb-4 text-[10px] font-bold tracking-[0.3em] text-neutral-500">
+          <span>ADAM // ARCADE</span>
+          <span>EST. 2026</span>
+        </div>
 
-          <div className="relative hidden md:block">
-            <span className="absolute left-1/2 top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/20 animate-ring" />
-            <div className="animate-float relative rounded-3xl border border-white/15 bg-white/[0.03] p-7 backdrop-blur">
-              <div className="flex items-center justify-between text-xs text-neutral-500">
-                <span>ADAM // ARCADE</span>
-                <span>● LIVE</span>
-              </div>
-              <div className="mt-10 grid place-items-center">
-                <div className="grid h-28 w-28 place-items-center rounded-2xl border border-white/25 text-5xl">✦</div>
-              </div>
-              <p className="mt-10 text-center text-sm leading-relaxed text-neutral-400">
-                «اضغط، العب، كرّر. البساطة هي اللعبة.»
-              </p>
-              <div className="mt-8 grid grid-cols-3 gap-2 text-center text-[11px] text-neutral-500">
-                {["SPORTS", "ARCADE", "SPACE"].map((t) => (
-                  <span key={t} className="rounded-lg border border-white/10 py-2">{t}</span>
-                ))}
-              </div>
-            </div>
+        <div className="relative mt-8 text-center">
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 top-2 select-none whitespace-nowrap text-[clamp(4.5rem,23vw,19rem)] font-black leading-[0.82] tracking-[-0.09em] text-transparent"
+            style={{ WebkitTextStroke: "1px rgba(255,255,255,0.18)" }}
+          >
+            ADAM
+          </span>
+          <h1 className="relative select-none whitespace-nowrap text-[clamp(4.5rem,23vw,19rem)] font-black leading-[0.82] tracking-[-0.09em] text-white">
+            ADAM
+          </h1>
+        </div>
+
+        <div className="relative mx-auto mt-8 max-w-4xl border-t border-white/15 pt-8 text-center">
+          <p className="text-xl font-bold md:text-2xl">العب. نزّل. خلّي اليوم ممتع.</p>
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-loose text-neutral-400 md:text-base">
+            خمسة ألعاب بس، كلها باسم ADAM: Subway by adam، ADAM Football، ADAM Strike، يومك أهم، وADAM Game.
+            وADAM Strike تقدر تلعبه هنا في المتصفح من غير تحميل.
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <a href="#games" className="rounded-xl bg-white px-6 py-3.5 text-sm font-bold text-black transition hover:bg-neutral-300">
+              تصفّح الألعاب
+            </a>
+            <a href="#play" className="rounded-xl border border-white/25 px-6 py-3.5 text-sm font-bold transition hover:border-white hover:bg-white/5">
+              العب ADAM Strike
+            </a>
           </div>
+          <dl className="mt-10 flex flex-wrap justify-center gap-10 border-t border-white/10 pt-7">
+            {[
+              ["٥", "ألعاب للتنزيل"],
+              ["١", "لعبة في المتصفح"],
+              ["∞", "مرح ومتعة"],
+            ].map(([value, label]) => (
+              <div key={label}>
+                <dt className="text-2xl font-black">{value}</dt>
+                <dd className="mt-1 text-xs text-neutral-500">{label}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </section>
 
@@ -135,7 +122,7 @@ export default function Home() {
               <h2 className="mt-4 text-4xl font-black tracking-tight md:text-5xl">العب من غير تحميل</h2>
             </div>
             <p className="max-w-md text-sm leading-loose text-neutral-400">
-             جرّبة سريعة من لعبة الفضاء: حرّك السفينة واضرب النار. كل اللي هنا بالأبيض والأسود.
+             نسخة المتصفح من ADAM Strike: حرّك السفينة واضرب النار. بمفيش تحميل وبدون تسجيل.
             </p>
           </div>
           <SpaceShooter />
@@ -180,7 +167,6 @@ export default function Home() {
           </div>
           <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-6 text-xs text-neutral-600">
             <span>© 2026 ADAM — adamehab828@gmail.com — 01069607847</span>
-            <span>عربي · RTL · أبيض وأسود</span>
           </div>
         </div>
       </footer>
