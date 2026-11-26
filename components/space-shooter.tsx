@@ -57,13 +57,18 @@ export default function SpaceShooter() {
     };
     resetRef.current = reset;
 
+    const isTyping = (e: KeyboardEvent) =>
+      Boolean((e.target as HTMLElement | null)?.closest("input, textarea, select, [contenteditable='true']"));
+
     const onKeyDown = (e: KeyboardEvent) => {
+      if (isTyping(e)) return;
       if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", " "].includes(e.key)) e.preventDefault();
       keys.current.add(e.key.toLowerCase());
       if (e.key === " ") firing.current = true;
       if (dead && (e.key === "Enter" || e.key === " ")) reset();
     };
     const onKeyUp = (e: KeyboardEvent) => {
+      if (isTyping(e)) return;
       keys.current.delete(e.key.toLowerCase());
       if (e.key === " ") firing.current = false;
     };

@@ -65,8 +65,7 @@ export default function DinoGame() {
     jumpRef.current = jump;
 
     const onKeyDown = (e: KeyboardEvent) => {
-      const tag = (e.target as HTMLElement | null)?.tagName;
-      if (tag === "INPUT" || tag === "TEXTAREA") return;
+      if ((e.target as HTMLElement | null)?.closest("input, textarea, select, [contenteditable='true']")) return;
       if (e.key === " " || e.key === "ArrowUp") {
         e.preventDefault();
         jump();
