@@ -49,20 +49,29 @@ export default function ImageStudio() {
     setError("");
     const nextSeed = Math.floor(Math.random() * 999999);
     setSeed(nextSeed);
+    const localUrl = `/api/image?prompt=${encodeURIComponent(text)}&seed=${nextSeed}`;
     const finalPrompt = `${text} — monochrome, black and white, high contrast, clean composition, no text`;
-    const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(finalPrompt)}?width=768&height=768&seed=${nextSeed}`;
+    const directUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(finalPrompt)}?width=768&height=768&seed=${nextSeed}`;
 
-    const img = new window.Image();
-    img.onload = () => {
-      setImage(url);
-      remember({ url, prompt: text, seed: nextSeed });
-      setLoading(false);
+    const load = (url: string, fallback?: string) => {
+      const img = new window.Image();
+      img.onload = () => {
+        setImage(url);
+        remember({ url, prompt: text, seed: nextSeed });
+        setLoading(false);
+      };
+      img.onerror = () => {
+        if (fallback) {
+          load(fallback);
+        } else {
+          setError("الصورة لسه مش جاهزة — الخدمة المجانية بتسمح بصورة كل 45 ثانية. جرّب تاني بعد شوية.");
+          setLoading(false);
+        }
+      };
+      img.src = url;
     };
-    img.onerror = () => {
-      setError("الصورة لسه مش جاهزة — الخدمة المجانية بتسمح بصورة كل 45 ثانية. جرّب تاني بعد شوية.");
-      setLoading(false);
-    };
-    img.src = url;
+
+    load(localUrl, directUrl);
   }
 
   async function download() {
