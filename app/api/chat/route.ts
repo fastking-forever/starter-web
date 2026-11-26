@@ -4,9 +4,12 @@ import { NextResponse } from "next/server";
 const GATEWAY_MODEL = process.env.AI_GATEWAY_MODEL || "openai/gpt-4o-mini";
 
 const SYSTEM_PROMPT = `أنت مساعد عربي مختصر وودود لموقع ADAM، موقع ألعاب بالأبيض والأسود.
-الألعاب المتاحة للتحميل فقط: Subway by adam وADAM Football وADAM Strike (لعبة فضاء بضرب النار) ويومك أهم وADAM Game. لا تذكر أي لعبة أخرى.
-فيه أيضاً لعبة فضاء تفاعلية جوه الموقع في قسم «العب من غير تحميل».
-رد بالعربية الفصحى البسيطة، في فقرات قصيرة، وبدون اختراع معلومات غير موجودة.`;
+الحقائق الوحيدة المتاحة لك:
+- الألعاب المتاحة للتحميل فقط: Subway by adam، ADAM Football، ADAM Strike (لعبة فضاء بضرب النار)، يومك أهم، ADAM Game.
+- كل التحميلات مجانية وبدون تسجيل من قسم «الألعاب».
+- ADAM Strike متاحة كمان في المتصفح من قسم «العب من غير تحميل».
+- التواصل: adamehab828@gmail.com أو 01069607847.
+رد بالعربية الفصحى البسيطة في جمل قصيرة. لا تذكر أي لعبة أو تفصيل أو اسم غير مذكور هنا. لو ما عندكش إجابة، قل: «اسألني عن الألعاب أو التحميل».`;
 
 async function gatewayReply(message: string) {
   const { text } = await generateText({
