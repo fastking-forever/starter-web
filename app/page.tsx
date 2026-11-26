@@ -2,13 +2,14 @@ import AiChat from "@/components/ai-chat";
 import DinoGame from "@/components/dino-game";
 import Faq from "@/components/faq";
 import GameLibrary from "@/components/game-library";
+import ImageStudio from "@/components/image-studio";
 import SpaceShooter from "@/components/space-shooter";
 import Tools from "@/components/tools";
 
 const features = [
   { n: "01", title: "تحميل مباشر", body: "اضغط و	nزّل. مفيش تسجيل، مفيش انتظار، مفيش تعقيد.", icon: "↓" },
   { n: "02", title: "العب من الموقع", body: "لعبتين شغالتين جوه الصفحة: ADAM Strike وADAM Dino.", icon: "✦" },
-  { n: "03", title: "خدمات ومساعد", body: "حاسبة ومولّد كلمات مرور ومؤقت، ومساعد ذكي يرد بالعربي.", icon: "◈" },
+  { n: "03", title: "استوديو وخدمات", body: "مولّد صور بالذكاء الاصطناعي، وحاسبة ومؤقت، ومساعد ذكي.", icon: "◈" },
 ];
 
 export default function Home() {
@@ -26,6 +27,7 @@ export default function Home() {
             <a href="#play" className="transition hover:text-white">العب دلوقتي</a>
             <a href="#dino" className="transition hover:text-white">الديناصور</a>
             <a href="#tools" className="transition hover:text-white">خدمات</a>
+            <a href="#create" className="transition hover:text-white">استوديو الصور</a>
             <a href="#ai" className="transition hover:text-white">المساعد</a>
             <a href="#faq" className="transition hover:text-white">الأسئلة</a>
           </nav>
@@ -65,7 +67,7 @@ export default function Home() {
           <p className="text-xl font-bold md:text-2xl">العب. نزّل. خلّي اليوم ممتع.</p>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-loose text-neutral-400 md:text-base">
             خمسة ألعاب بس، كلها باسم ADAM: Subway by adam، ADAM Football، ADAM Strike، يومك أهم، وADAM Game.
-            وADAM Strike ولعبة الديناصور تقدر تلعبهم هنا في المتصفح من غير تحميل.
+            وADAM Strike ولعبة الديناصور تقدر تلعبهم هنا في المتصفح من غير تحميل، وتقدر كمان تولّد صورة بالذكاء الاصطناعي.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <a href="#games" className="rounded-xl bg-white px-6 py-3.5 text-sm font-bold text-black transition hover:bg-neutral-300">
@@ -79,7 +81,7 @@ export default function Home() {
             {[
               ["٥", "ألعاب للتنزيل"],
               ["٢", "لعبتين في المتصفح"],
-              ["٣", "خدمات جوه الموقع"],
+              ["٤", "خدمات وأدوات"],
             ].map(([value, label]) => (
               <div key={label}>
                 <dt className="text-2xl font-black">{value}</dt>
@@ -152,6 +154,8 @@ export default function Home() {
       </section>
 
       <Tools />
+
+      <ImageStudio />
 
       {/* AI */}
       <section id="ai" className="border-t border-white/10">
