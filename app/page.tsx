@@ -51,6 +51,7 @@ export default function Home() {
         </div>
 
         <div className="relative mt-8 text-center">
+          <p className="pixel mb-3 text-[10px] text-neutral-400">INSERT COIN <span className="blink">█</span> PRESS START</p>
           <h1 className="sr-only">ADAM</h1>
           <video
             autoPlay
@@ -98,7 +99,7 @@ export default function Home() {
       <div className="overflow-hidden border-y border-white/10 bg-white py-3">
         <div className="flex w-max gap-10 whitespace-nowrap text-xs font-black tracking-[0.35em] text-black animate-marquee">
           {Array.from({ length: 6 }, (_, i) => (
-            <span key={i}>ADAM ★ DOWNLOAD ★ PLAY ★ REPEAT ★</span>
+            <span key={i}>ADAM ★ INSERT COIN ★ PLAY ★ REPEAT ★</span>
           ))}
         </div>
       </div>
