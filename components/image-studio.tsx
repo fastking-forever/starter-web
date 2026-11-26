@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Item = { url: string; prompt: string; seed: number };
 
@@ -19,6 +19,15 @@ export default function ImageStudio() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [history, setHistory] = useState<Item[]>([]);
+  const retryRef = useRef<number | null>(null);
+  const objectUrlRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (retryRef.current) window.clearTimeout(retryRef.current);
+      if (objectUrlRef.current) URL.revokeObjectURL(objectUrlRef.current);
+    };
+  }, []);
 
   useEffect(() => {
     try {
@@ -53,25 +62,51 @@ export default function ImageStudio() {
     const finalPrompt = `${text} — monochrome, black and white, high contrast, clean composition, no text`;
     const directUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(finalPrompt)}?width=768&height=768&seed=${nextSeed}`;
 
-    const load = (url: string, fallback?: string) => {
-      const img = new window.Image();
-      img.onload = () => {
-        setImage(url);
-        remember({ url, prompt: text, seed: nextSeed });
-        setLoading(false);
-      };
-      img.onerror = () => {
-        if (fallback) {
-          load(fallback);
-        } else {
-          setError("الصورة لسه مش جاهزة — الخدمة المجانية بتسمح بصورة كل 45 ثانية. جرّب تاني بعد شوية.");
-          setLoading(false);
-        }
-      };
-      img.src = url;
+    const succeed = (displayUrl: string) => {
+      if (objectUrlRef.current) URL.revokeObjectURL(objectUrlRef.current);
+      objectUrlRef.current = displayUrl.startsWith("blob:") ? displayUrl : null;
+      setImage(displayUrl);
+      remember({ url: localUrl, prompt: text, seed: nextSeed });
+      setError("");
+      setLoading(false);
     };
 
-    load(localUrl, directUrl);
+    const directFallback = () => {
+      const img = new window.Image();
+      img.onload = () => succeed(directUrl);
+      img.onerror = () => {
+        setError("الصورة لسه مش جاهزة — الخدمة المجانية بتسمح بصورة كل 45 ثانية. جرّب تاني بعد شوية.");
+        setLoading(false);
+      };
+      img.src = directUrl;
+    };
+
+    const attempt = async () => {
+      try {
+        const res = await fetch(localUrl);
+        if (res.status === 429) {
+          const data = (await res.json().catch(() => ({}))) as { retryAfter?: number };
+          const wait = Math.max(1, Math.min(120, Number(data.retryAfter) || 45));
+          setError(`الخدمة وصلت للحد المجاني — هحاول تاني تلقائياً بعد ${wait} ثانية.`);
+          if (retryRef.current) window.clearTimeout(retryRef.current);
+          retryRef.current = window.setTimeout(() => {
+            retryRef.current = null;
+            void attempt();
+          }, wait * 1000);
+          return;
+        }
+        if (!res.ok) {
+          directFallback();
+          return;
+        }
+        const blob = await res.blob();
+        succeed(URL.createObjectURL(blob));
+      } catch {
+        directFallback();
+      }
+    };
+
+    void attempt();
   }
 
   async function download() {

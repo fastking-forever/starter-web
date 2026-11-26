@@ -17,6 +17,13 @@ export async function GET(request: Request) {
 
   try {
     const res = await fetch(upstream, { cache: "force-cache" });
+    if (res.status === 402 || res.status === 429) {
+      const retryAfter = Math.max(1, Math.min(120, Number(res.headers.get("retry-after")) || 45));
+      return NextResponse.json(
+        { error: "rate_limited", retryAfter },
+        { status: 429, headers: { "Retry-After": String(retryAfter) } },
+      );
+    }
     if (!res.ok) {
       return NextResponse.json({ error: `image provider returned ${res.status}` }, { status: 503 });
     }
