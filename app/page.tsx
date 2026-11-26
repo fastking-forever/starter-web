@@ -86,6 +86,9 @@ export default function Home() {
         <div className="mono-grid pointer-events-none absolute inset-0 opacity-60 [mask-image:radial-gradient(circle_at_50%_35%,black,transparent_70%)]" />
 
         <div className="relative z-10 w-full max-w-4xl">
+          <p className="mx-auto mb-7 max-w-2xl border-r-2 border-[#7FF2B0]/50 pr-4 text-right font-display text-sm leading-loose text-white/75 md:text-base">
+            «من لا يبذل نفسه علي مقاعد العلم , اذلته الحياه علي ابوابها»
+          </p>
           <span className="section-tag">◈ Premium Arabic Arcade</span>
           <h1 className="font-display mt-7 text-5xl font-black leading-[1.1] md:text-7xl">
             أهلًا بك في <span className="gradient-text">ADAM</span>
@@ -130,7 +133,7 @@ export default function Home() {
             <h2 className="section-title mt-5">مقدمة ADAM</h2>
             <p className="section-desc mx-auto mt-3 max-w-xl">شوف البداية، وبعدين اختار لعبتك وابدأ.</p>
           </div>
-          <div className="glass-card overflow-hidden rounded-2xl p-2">
+          <div className="glass-card mx-auto max-w-3xl overflow-hidden rounded-2xl p-2">
             <video
               autoPlay
               loop
