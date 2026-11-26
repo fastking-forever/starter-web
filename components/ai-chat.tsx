@@ -10,13 +10,13 @@ const suggestions = [
   "فين لعبة ضرب النار؟",
 ];
 
+const welcome: Message = {
+  role: "assistant",
+  content: "أهلاً بك 👋 أنا مساعد ADAM. اسألني عن الألعاب أو التحميل وأساعدك فوراً.",
+};
+
 export default function AiChat() {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      role: "assistant",
-      content: "أهلاً بك 👋 أنا مساعد ADAM. اسألني عن الألعاب أو التحميل وأساعدك فوراً.",
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([welcome]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const logRef = useRef<HTMLDivElement>(null);
@@ -65,15 +65,29 @@ export default function AiChat() {
 
   return (
     <div className="w-full max-w-2xl rounded-3xl border border-white/15 bg-white/[0.03] p-5 shadow-2xl shadow-black/60 backdrop-blur">
-      <div className="mb-4 flex items-center gap-3 border-b border-white/10 pb-4">
-        <span className="relative flex h-2.5 w-2.5">
-          <span className="absolute inline-flex h-full w-full animate-ring rounded-full bg-[#7FF2B0]/60" />
-          <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#7FF2B0]" />
-        </span>
-        <div>
-          <p className="text-sm font-semibold">مساعد ADAM</p>
-          <p className="text-xs text-neutral-500">متصل · بيرد بالعربي</p>
+      <div className="mb-4 flex items-center justify-between gap-3 border-b border-white/10 pb-4">
+        <div className="flex items-center gap-3">
+          <span className="relative flex h-2.5 w-2.5">
+            <span className="absolute inline-flex h-full w-full animate-ring rounded-full bg-[#7FF2B0]/60" />
+            <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#7FF2B0]" />
+          </span>
+          <div>
+            <p className="text-sm font-semibold">مساعد ADAM</p>
+            <p className="text-xs text-neutral-500">متصل · بيرد بالعربي</p>
+          </div>
         </div>
+        <button
+          type="button"
+          onClick={() => {
+            setMessages([welcome]);
+            setInput("");
+          }}
+          aria-label="مسح المحادثة"
+          title="مسح المحادثة"
+          className="rounded-lg border border-white/15 px-2.5 py-1 text-[11px] text-neutral-400 transition hover:border-[#7FF2B0]/50 hover:text-[#7FF2B0]"
+        >
+          مسح ↺
+        </button>
       </div>
 
       <div ref={logRef} role="log" aria-live="polite" aria-label="محادثة مساعد ADAM" className="flex h-64 flex-col gap-3 overflow-y-auto pl-1">
@@ -90,8 +104,16 @@ export default function AiChat() {
           </div>
         ))}
         {loading && (
-          <div className="self-start rounded-2xl border border-white/10 bg-white/[0.06] px-4 py-2.5 text-sm text-neutral-400">
-            بيفكّر...
+          <div
+            role="status"
+            aria-label="بيفكّر..."
+            className="self-start rounded-2xl border border-white/10 bg-white/[0.06] px-4 py-3"
+          >
+            <span className="flex items-center gap-1.5">
+              <span className="typing-dot" />
+              <span className="typing-dot" />
+              <span className="typing-dot" />
+            </span>
           </div>
         )}
       </div>
@@ -101,7 +123,8 @@ export default function AiChat() {
           <button
             key={s}
             onClick={() => void send(s)}
-            className="rounded-full border border-white/15 px-3 py-1.5 text-xs text-neutral-400 transition hover:border-white hover:text-white"
+            disabled={loading}
+            className="rounded-full border border-white/15 px-3 py-1.5 text-xs text-neutral-400 transition hover:border-white hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
           >
             {s}
           </button>

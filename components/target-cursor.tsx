@@ -62,12 +62,18 @@ export default function TargetCursor() {
       dy += (my - dy) * fast;
       cx += (mx - cx) * slow;
       cy += (my - cy) * slow;
-      if (Math.abs(mx - dx) < 0.05) dx = mx;
-      if (Math.abs(my - dy) < 0.05) dy = my;
-      if (Math.abs(mx - cx) < 0.05) cx = mx;
-      if (Math.abs(my - cy) < 0.05) cy = my;
+      const settled =
+        Math.abs(mx - dx) < 0.05 &&
+        Math.abs(my - dy) < 0.05 &&
+        Math.abs(mx - cx) < 0.05 &&
+        Math.abs(my - cy) < 0.05;
+      if (settled) {
+        dx = cx = mx;
+        dy = cy = my;
+      }
       paint();
-      raf = requestAnimationFrame(loop);
+      // Stop the frame loop once the cursor has caught up; onMove restarts it.
+      raf = settled ? 0 : requestAnimationFrame(loop);
     }
 
     function kick() {
