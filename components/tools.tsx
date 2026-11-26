@@ -1,7 +1,7 @@
 "use client";
 
 import QRCode from "qrcode";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 
 const keys = [
   ["C", "C"], ["(", "("], [")", ")"], ["÷", "/"],
@@ -32,10 +32,31 @@ function Calculator() {
     });
   }
 
+  function onKeyDown(e: KeyboardEvent<HTMLElement>) {
+    const key = e.key;
+    // Let a focused button handle its own Enter/Space activation.
+    if ((key === "Enter" || key === " ") && e.target instanceof HTMLButtonElement) return;
+    let value: string | null = null;
+    if (key === "Enter" || key === "=") value = "=";
+    else if (key === "Backspace") value = "back";
+    else if (key === "Escape" || key === "c" || key === "C") value = "C";
+    else if (/^[0-9+\-*/().]$/.test(key)) value = key;
+    else if (key === ",") value = ".";
+    if (!value) return;
+    e.preventDefault();
+    press(value);
+  }
+
   return (
-    <article className="rounded-2xl border border-white/15 bg-white/[0.02] p-6">
+    <article
+      tabIndex={0}
+      role="group"
+      aria-label="حاسبة سريعة — يمكنك الكتابة من لوحة المفاتيح"
+      onKeyDown={onKeyDown}
+      className="rounded-2xl border border-white/15 bg-white/[0.02] p-6 outline-none focus-visible:border-[#7FF2B0]/60"
+    >
       <h3 className="text-xl font-bold">حاسبة سريعة</h3>
-      <p className="mt-2 text-xs text-neutral-500">جمع وطرح وضرب وقسمة بدون إعلانات.</p>
+      <p className="mt-2 text-xs text-neutral-500">جمع وطرح وضرب وقسمة — واكتب من الكيبورد كمان.</p>
       <div dir="ltr" className="mt-5 rounded-xl border border-white/15 bg-black px-4 py-3 text-left font-mono text-2xl">
         {expr}
       </div>
@@ -148,21 +169,49 @@ function Countdown() {
   const [minutes, setMinutes] = useState(5);
   const [remaining, setRemaining] = useState(300);
   const [running, setRunning] = useState(false);
+  const deadlineRef = useRef<number | null>(null);
 
+  // Count against a real deadline instead of interval ticks, so the timer
+  // stays accurate even when the browser throttles a background tab.
   useEffect(() => {
     if (!running) return;
-    const id = window.setInterval(() => setRemaining((s) => Math.max(0, s - 1)), 1000);
+    const tick = () => {
+      const deadline = deadlineRef.current;
+      if (deadline === null) return;
+      const left = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+      setRemaining(left);
+      if (left === 0) {
+        setRunning(false);
+        deadlineRef.current = null;
+      }
+    };
+    const id = window.setInterval(tick, 200);
     return () => window.clearInterval(id);
   }, [running]);
 
-  useEffect(() => {
-    if (remaining === 0) setRunning(false);
-  }, [remaining]);
-
   function changeMinutes(n: number) {
     const next = Math.min(60, Math.max(1, n));
+    deadlineRef.current = null;
+    setRunning(false);
     setMinutes(next);
     setRemaining(next * 60);
+  }
+
+  function toggle() {
+    if (running) {
+      setRunning(false);
+      return;
+    }
+    const seconds = remaining === 0 ? minutes * 60 : remaining;
+    if (remaining === 0) setRemaining(seconds);
+    deadlineRef.current = Date.now() + seconds * 1000;
+    setRunning(true);
+  }
+
+  function resetTimer() {
+    deadlineRef.current = null;
+    setRunning(false);
+    setRemaining(minutes * 60);
   }
 
   const finished = remaining === 0;
@@ -180,31 +229,32 @@ function Countdown() {
         <p role="status" className="mt-3 text-center text-xs font-bold text-[#7FF2B0]">⏰ انتهى الوقت</p>
       )}
       <div className="mt-5 flex flex-wrap items-center gap-2">
-        {[1, 5, 10].map((n) => (
-          <button
-            key={n}
-            onClick={() => changeMinutes(n)}
-            className={`rounded-lg border px-3 py-2 text-xs font-bold transition ${
-              minutes === n ? "border-white bg-white text-black" : "border-white/15 hover:border-white"
-            }`}
-          >
-            {n} دقائق
-          </button>
-        ))}
+        <div role="group" aria-label="مدة المؤقت" className="flex flex-wrap gap-2">
+          {[1, 5, 10, 15, 25].map((n) => (
+            <button
+              key={n}
+              type="button"
+              disabled={running}
+              aria-pressed={minutes === n}
+              onClick={() => changeMinutes(n)}
+              className={`rounded-lg border px-3 py-2 text-xs font-bold transition disabled:opacity-40 ${
+                minutes === n ? "border-white bg-white text-black" : "border-white/15 hover:border-white"
+              }`}
+            >
+              {n} د
+            </button>
+          ))}
+        </div>
         <button
-          onClick={() => {
-            if (remaining === 0) setRemaining(minutes * 60);
-            setRunning((r) => !r);
-          }}
+          type="button"
+          onClick={toggle}
           className="rounded-lg border border-white/15 px-4 py-2 text-xs font-bold transition hover:border-white"
         >
           {running ? "إيقاف مؤقت" : finished ? "ابدأ من جديد" : "ابدأ"}
         </button>
         <button
-          onClick={() => {
-            setRunning(false);
-            setRemaining(minutes * 60);
-          }}
+          type="button"
+          onClick={resetTimer}
           className="rounded-lg border border-white/15 px-4 py-2 text-xs font-bold transition hover:border-white"
         >
           إعادة
