@@ -81,7 +81,7 @@ function quickReply(message: string): string | null {
     return "ادم في الدرس";
   }
   if (q.includes("سبواي") || q.includes("subway")) {
-    return "Subway by adam متاحة للتحميل من قسم الألعاب. اضغط «حمّل» وثبّت الملف على جوالك.";
+    return "Subway by adam هي نسخة ADAM من Subway Surfers في زيورخ. حمّلها من قسم الألعاب.";
   }
   if (q.includes("كور") || q.includes("football")) {
     return "ADAM Football متاحة للتحميل من قسم الألعاب، ومعها ADAM Strike في المتصفح.";
@@ -95,7 +95,7 @@ function quickReply(message: string): string | null {
   if (q.includes("نيون") || q.includes("بريكر") || q.includes("طوب") || q.includes("adam game")) {
     return "ADAM Game هي Neon Breaker: اكسر الطوب واصطد القوى الخارقة. حمّلها من قسم الألعاب.";
   }
-  if (q.includes("وقتك") || q.includes("تودو") || q.includes("منبه") || q.includes("مهمات") || q.includes("مهام")) {
+  if (q.includes("وقتك") || q.includes("يومك") || q.includes("تودو") || q.includes("منبه") || q.includes("مهمات") || q.includes("مهام")) {
     return "يومك أهم هي تو دو ليست بالمنبهات والإشعارات من ADAM. تقدر تحمّلها من قسم الألعاب.";
   }
   if (q.includes("زيورخ") || q.includes("surfers")) {

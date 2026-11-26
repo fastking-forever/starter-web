@@ -3,11 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 
 const options = [
-  { name: "Subway by adam", href: "#games" },
-  { name: "ADAM Football", href: "#games" },
-  { name: "ADAM Strike", href: "#play" },
-  { name: "يومك أهم", href: "#games" },
-  { name: "ADAM Game", href: "#games" },
+  { name: "Subway by adam", href: "#games", desc: "جري ومراوغة في زيورخ" },
+  { name: "ADAM Football", href: "#games", desc: "ماتش كرة قدم سريع" },
+  { name: "ADAM Strike", href: "#play", desc: "العبها دلوقتي في المتصفح" },
+  { name: "يومك أهم", href: "#games", desc: "تو دو ليست ومنبّهات" },
+  { name: "ADAM Game", href: "#games", desc: "Neon Breaker لكسر الطوب" },
 ];
 const step = 360 / options.length;
 
@@ -17,6 +17,7 @@ export default function GameWheel() {
   const [rotation, setRotation] = useState(0);
   const [spinning, setSpinning] = useState(false);
   const [winner, setWinner] = useState<number | null>(null);
+  const [reduced, setReduced] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -50,6 +51,7 @@ export default function GameWheel() {
   }, []);
 
   useEffect(() => {
+    setReduced(window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false);
     return () => {
       if (timerRef.current) window.clearTimeout(timerRef.current);
     };
@@ -62,13 +64,13 @@ export default function GameWheel() {
     const index = Math.floor(Math.random() * options.length);
     const current = ((rotation % 360) + 360) % 360;
     const desired = (360 - index * step) % 360;
-    const delta = 5 * 360 + ((desired - current + 360) % 360);
-    setRotation(rotation + delta);
+    const delta = reduced ? desired - current : 5 * 360 + ((desired - current + 360) % 360);
+    setRotation(reduced ? desired : rotation + delta);
     timerRef.current = window.setTimeout(() => {
       setWinner(index);
       setSpinning(false);
       timerRef.current = null;
-    }, 3600);
+    }, reduced ? 150 : 3600);
   }
 
   return (
@@ -84,7 +86,7 @@ export default function GameWheel() {
           className="block rounded-full border border-white/25"
           style={{
             transform: `rotate(${rotation}deg)`,
-            transition: spinning ? "transform 3.5s cubic-bezier(0.12, 0.72, 0.12, 1)" : "none",
+            transition: spinning && !reduced ? "transform 3.5s cubic-bezier(0.12, 0.72, 0.12, 1)" : "none",
           }}
         />
       </div>
@@ -95,6 +97,7 @@ export default function GameWheel() {
           عجلة فيها الألعاب الخمسة. دوّرها وهتقول لك تلعب أنهي واحدة دلوقتي.
         </p>
         <button
+          type="button"
           onClick={spin}
           disabled={spinning}
           className="cta-mint mt-6 rounded-xl px-6 py-3 text-sm font-bold"
@@ -107,6 +110,7 @@ export default function GameWheel() {
             <a href={options[winner].href} className="font-bold transition hover:underline">
               {options[winner].name}
             </a>
+            <span className="mt-1 block text-xs text-neutral-500">{options[winner].desc}</span>
           </div>
         )}
       </div>

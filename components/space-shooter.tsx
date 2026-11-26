@@ -443,15 +443,19 @@ export default function SpaceShooter() {
     };
   }, []);
 
-  const onCanvasPointerDown = (e: ReactPointerEvent<HTMLCanvasElement>) => {
-    e.currentTarget.setPointerCapture(e.pointerId);
-    aimRef.current(e);
+  const beginGame = () => {
     if (over) {
       resetRef.current();
       playSound("start");
-    } else if (!started) {
+    } else {
       startRef.current();
     }
+  };
+
+  const onCanvasPointerDown = (e: ReactPointerEvent<HTMLCanvasElement>) => {
+    e.currentTarget.setPointerCapture(e.pointerId);
+    aimRef.current(e);
+    beginGame();
     pressControl(e.pointerId, " ");
   };
 
@@ -492,11 +496,7 @@ export default function SpaceShooter() {
         {(!started || over) && (
           <div className="absolute inset-0 grid place-items-center bg-[#06100C]/70 backdrop-blur-sm">
             <button
-              onClick={() => {
-                if (over) resetRef.current();
-                else startRef.current();
-                playSound("start");
-              }}
+              onClick={beginGame}
               className="cta-mint rounded-xl px-6 py-3 text-sm font-bold"
             >
               {over ? `انتهت اللعبة — النقاط ${score} — العب تاني ↻` : "ابدأ اللعب ↑"}
@@ -516,12 +516,7 @@ export default function SpaceShooter() {
               onPointerDown={(e) => {
                 e.currentTarget.setPointerCapture(e.pointerId);
                 canvasRef.current?.focus();
-                if (over) {
-                  resetRef.current();
-                  playSound("start");
-                } else if (!started) {
-                  startRef.current();
-                }
+                beginGame();
                 pressControl(e.pointerId, k);
               }}
               onPointerUp={(e) => releaseControl(e.pointerId)}
